@@ -11,6 +11,7 @@
                 --color-black: #000000;
                 --color-gray: #808080;
                 --color-lightgray: #d3d3d3;
+                --color-biege: #f5f5dc;
                 --border-solid: solid;
                 --border-width: 4px;
                 --square-height: 100px;
@@ -45,9 +46,9 @@
             .body-squares-container {
                 width: 70%;
                 margin: auto;
-                background-color: #f5f5dc;
+                background-color: var(--color-biege);
                 border-bottom: 2px dotted #000000;
-                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+                box-shadow:  12px 0 15px -4px rgba(0, 0, 0, 0.2), -12px 0 8px -4px rgba(0, 0, 0, 0.19);
             }
             .body-squares-content {
                 position: relative;
@@ -103,16 +104,16 @@
             }
 
             .red-bg-color {
-                background-color: #ff0000;
+                background-color: var(--color-red);
             }
             .green-bg-color {
-                background-color: #008000;
+                background-color: var(--color-green);
             }
             .blue-bg-color {
-                background-color: #0000ff;
+                background-color: var(--color-blue);
             }
             .yellow-bg-color {
-                background-color: #ffff00;
+                background-color: var(--color-yellow);
             }
         </style>
     </head>
