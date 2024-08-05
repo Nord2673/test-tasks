@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <style>
+            :root {
+                --color-red: #ff0000;
+                --color-green: #008000;
+                --color-blue: #0000ff;
+                --color-yellow: #ffff00;
+                --color-black: #000000;
+                --color-gray: #808080;
+                --color-lightgray: #d3d3d3;
+                --border-solid: solid;
+                --border-width: 4px;
+                --square-height: 100px;
+                --square-width: 100px;
+                --content-block-height: 500px;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+            }
+
+            .header-container {
+                position: sticky;
+                top: 0;
+                z-index: 99;
+                background-color: var(--color-gray);
+            }
+            .header-squares-content {
+                display: flex;
+                justify-content: space-between;
+            }
+            .header-squares-content-item-position {
+                position: fixed;
+                top: 20px;
+                left: 120px;
+            }
+
+            .body-squares-container {
+                width: 70%;
+                margin: auto;
+                background-color: #f5f5dc;
+                border-bottom: 2px dotted #000000;
+                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
+            }
+            .body-squares-content {
+                position: relative;
+                display: flex;
+                justify-content: space-around;
+                height: var(--content-block-height);
+            }
+            .body-squares-content-item-relative-position {
+                position: relative;
+                top: 20px;
+                left: 120px;
+            }
+            .body-squares-content-item-absolute-position {
+                position: absolute;
+                top: 100px;
+                left: 100px;
+            }
+
+            .footer-squares-content {
+                position: relative;
+                display: flex;
+                height: 200px;
+                background-color: var(--color-lightgray);
+                justify-content: center;
+                align-items: end;
+            }
+            .footer-squares-content-item-position {
+                position: sticky;
+                bottom: 0px;
+            }
+
+            .squares-content-item {
+                width: var(--square-width);
+                height: var(--square-height);
+                margin: 20px;
+                border: var(--border-width) var(--border-solid) var(--color-black);
+
+            }
+            .squares-content-item-textbox {
+                font-size: 48px;
+                text-align: center;
+                line-height: calc(var(--square-height) - var(--border-width) * 2);
+                font-weight: 300;
+            }
+            .header-squares-content-item-position .squares-content-item-textbox,
+            .body-squares-content-item-relative-position .squares-content-item-textbox,
+            .body-squares-content-item-absolute-position .squares-content-item-textbox,
+            .footer-squares-content-item-position .squares-content-item-textbox {
+                font-size: 24px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .red-bg-color {
+                background-color: #ff0000;
+            }
+            .green-bg-color {
+                background-color: #008000;
+            }
+            .blue-bg-color {
+                background-color: #0000ff;
+            }
+            .yellow-bg-color {
+                background-color: #ffff00;
+            }
+        </style>
+    </head>
+    <body>
+        <!--тестовое задание -->
+        <div class="header-container">
+            <div class="header-wrapper">
+                <div class="header-squares-content">
+                    <div class="squares-content-item red-bg-color">
+                        <div class="squares-content-item-textbox">1</div>
+                    </div>
+                    <div class="squares-content-item header-squares-content-item-position green-bg-color">
+                        <div class="squares-content-item-textbox">fixed</div>
+                    </div>
+                    <div class="squares-content-item blue-bg-color">
+                        <div class="squares-content-item-textbox">3</div>
+                    </div>
+                    <div class="squares-content-item yellow-bg-color">
+                        <div class="squares-content-item-textbox">4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="body-container">
+            <div class="body-wrapper">
+                <div class="body-squares-container">
+                    <div class="body-squares-content">
+                        <div class="squares-content-item red-bg-color">
+                            <div class="squares-content-item-textbox">1</div>
+                        </div>
+                        <div class="squares-content-item body-squares-content-item-relative-position green-bg-color">
+                            <div class="squares-content-item-textbox">relative</div>
+                        </div>
+                        <div class="squares-content-item blue-bg-color">
+                            <div class="squares-content-item-textbox">3</div>
+                        </div>
+                        <div class="squares-content-item yellow-bg-color">
+                            <div class="squares-content-item-textbox">4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body-squares-container">
+                    <div class="body-squares-content">
+                        <div class="squares-content-item red-bg-color">
+                            <div class="squares-content-item-textbox">1</div>
+                        </div>
+                        <div class="squares-content-item body-squares-content-item-absolute-position green-bg-color">
+                            <div class="squares-content-item-textbox">absolute</div>
+                        </div>
+                        <div class="squares-content-item blue-bg-color">
+                            <div class="squares-content-item-textbox">3</div>
+                        </div>
+                        <div class="squares-content-item yellow-bg-color">
+                            <div class="squares-content-item-textbox">4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-container">
+            <div class="footer-wrapper">
+                <div class="footer-squares-content">
+                    <div class="squares-content-item red-bg-color">
+                        <div class="squares-content-item-textbox">1</div>
+                    </div>
+                    <div class="squares-content-item footer-squares-content-item-position green-bg-color">
+                        <div class="squares-content-item-textbox">sticky</div>
+                    </div>
+                    <div class="squares-content-item blue-bg-color">
+                        <div class="squares-content-item-textbox">3</div>
+                    </div>
+                    <div class="squares-content-item yellow-bg-color">
+                        <div class="squares-content-item-textbox">4</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / тестовое задание -->
+    </body>
+</html>
