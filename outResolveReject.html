@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h1>Outside resolve and reject</h1>
+
+        <button id="start-button" onclick="handlePromise()">Start</button>
+        <button id="resolve-button" onclick="promise.outResolve('Resolved')">Resolve</button>
+        <button id="reject-button" onclick="promise.outReject()">Reject</button>
+
+        <p id="demo"></p>
+
+        <script>
+            var x = 4;
+            var y = 10;
+            var testSum = 14; // x + y
+            var testMult = 140; // sum * y
+            var testDivide = 35; // mult / x
+
+            function output(some) {
+                document.getElementById("demo").innerHTML += some + "<br>";
+            }
+
+            function disableStartButton() {
+                document.getElementById("start-button").disabled = true;
+                document.getElementById("start-button").textContent = "Processing..";
+            }
+            function enableStartButton() {
+                document.getElementById("start-button").disabled = false;
+                document.getElementById("start-button").textContent = "Start";
+            }
+
+            function constructPromise() {
+                let outRes,
+                    outRej,
+                    prom = new Promise((resolve, reject) => {
+                        outRes = resolve;
+                        outRej = reject;
+                    });
+                prom.outResolve = outRes;
+                prom.outReject = outRej;
+                return prom;
+            }
+
+            var promise;
+
+            function handlePromise(){
+                Promise.resolve()
+                    .then(disableStartButton())
+                    .then(async () => await (promise = constructPromise()))
+                    .then((sum) => output("Promise 1 " + sum)) 
+                    .then(null, (onReject) => {throw onReject ? onReject : new Error("Promise 1 interrupted")})
+                    .then(async () => await (promise = constructPromise()))
+                    .then((mult) => output("Promise 2 " + mult))
+                    .then(null, (onReject) => {throw onReject ? onReject : new Error("Promise 2 interrupted")})
+                    .then(async () => await (promise = constructPromise()))
+                    .then((divide) => output("Promise 3 " + divide))
+                    .then(null, (onReject) => {throw onReject ? onReject : new Error("Promise 3 interrupted")})
+                    .catch((error) => output(error + ". Try again"))
+                    .finally(() => enableStartButton());
+                }
+        </script>
+    </body>
+</html>
