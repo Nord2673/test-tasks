@@ -50,11 +50,29 @@
                 display: none;
             }
 
-            .accordion-close-container {
+            .accordion-close-container,
+            .accordion-expander-container {
                 display: none;
                 margin-right: 10px;
                 justify-content: end;
                 color: #0000ff;
+            }
+
+            /* .css-partial-view-accordion-text {
+                overflow: hidden;
+                line-height: 1.2em;
+                height: calc(3.6em + 10px);
+                padding: 10px;
+            } */
+            .css-partial-view-accordion-text {
+                display: -webkit-box;
+                padding: 10px;
+                line-height: 1.2em;
+                max-height: calc(3.6em + 10px);
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
         </style>
     </head>
@@ -103,11 +121,46 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="css-partial-view-accordion-container">
+                    <div class="css-partial-view-accordion-wrapper">
+                        <div class="accordion-content">
+                            <div class="css-partial-view-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Cubilia pharetra consectetur ad cras posuere. Etiam libero finibus integer dignissim placerat fusce amet auctor conubia. Adipiscing pharetra lacus laoreet in libero. Velit conubia pellentesque curae placerat; accumsan per lacus faucibus. Amet libero venenatis sagittis nulla tortor ante sollicitudin maximus. Pharetra nisi ultrices inceptos diam eleifend tincidunt torquent consequat. Ipsum risus ut himenaeos; adipiscing ex lacus. Class ligula condimentum porttitor tempus laoreet nascetur scelerisque. Ornare torquent magna praesent integer magnis ipsum sociosqu ac. Nisl sem fusce; porttitor odio eget penatibus hac. Eu urna rutrum hac integer platea. Potenti justo accumsan in lacus vulputate. Diam class etiam cursus aptent commodo libero in felis. Magna ac amet nisl fermentum, nec sem.</div>
+                            <div class="accordion-expander-container">
+                                <div class="accordion-expander" onclick="switchExpanderAndText(document.querySelector('.css-partial-view-accordion-text'))">more</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script>
+            checkTruncate(document.querySelector(".css-partial-view-accordion-text"));
+
             function switchTextVisibility(target) {
                 target.style.display == "block" ? (target.style.display = "none") : (target.style.display = "block");
+            }
+
+            function switchExpanderAndText(target) {
+                let expander = document.querySelector(".accordion-expander");
+                if (target.style.display == "block") {
+                    target.style.display = "-webkit-box";
+                    target.style.maxHeight = "calc(3.6em + 10px)";
+                    expander.innerHTML = "more";
+                } else {
+                    target.style.display = "block";
+                    target.style.maxHeight = "none";
+                    expander.innerHTML = "less";
+                }
+            }
+
+            function checkTruncate(target) {
+                let expanderCont = document.querySelector(".accordion-expander-container");
+                if (target.offsetHeight < target.scrollHeight) {
+                    expanderCont.style.display = "flex";
+                } else {
+                    expanderCont.style.display = "none";
+                }
             }
         </script>
     </body>
