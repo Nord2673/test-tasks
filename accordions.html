@@ -1,0 +1,114 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <title>Аккордеоны</title>
+        <style>
+            :root {
+                --accordion-color: #f5f5dc;
+                --div-margin-bottom: 20px;
+                --border-param: 1px solid;
+                --label-font-size: 24px;
+                --accordion-width: 500px;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            .main-wrapper > div {
+                margin-bottom: 20px;
+            }
+
+            .accordion-content {
+                width: var(--accordion-width);
+                background-color: var(--accordion-color);
+                border: var(--border-param);
+            }
+            .accordion-label {
+                display: flex;
+                padding-left: 10px;
+                font-size: var(--label-font-size);
+            }
+            .accordion-text {
+                padding: 10px;
+                border-top: var(--border-param);
+            }
+
+            .accordion-content input {
+                display: none;
+            }
+            .css-accordion-text {
+                display: none;
+            }
+            #accordion-checkbox:checked ~ .css-accordion-text,
+            #accordion-radio:checked ~ .css-accordion-text {
+                display: block;
+            }
+            #accordion-radio:checked ~ .accordion-close-container {
+                display: flex;
+            }
+
+            .js-accordion-text {
+                display: none;
+            }
+
+            .accordion-close-container {
+                display: none;
+                margin-right: 10px;
+                justify-content: end;
+                color: #0000ff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="main-wrapper">
+                <div class="html-accordion-container">
+                    <div class="html-accordion-wrapper">
+                        <details class="accordion-content">
+                            <summary class="accordion-label">HTML accordion</summary>
+                            <div class="accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos risus hac sodales quam curabitur fringilla nullam primis. Convallis amet lacus nunc, facilisi eleifend tincidunt accumsan. Vel scelerisque taciti venenatis elementum elit pellentesque. Lobortis mauris eget integer egestas turpis rhoncus nullam.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <div class="css-accordion-container">
+                    <div class="css-accordion-wrapper">
+                        <div class="accordion-content">
+                            <input type="checkbox" id="accordion-checkbox" />
+                            <label for="accordion-checkbox" class="accordion-label">CSS accordion</label>
+                            <div class="accordion-text css-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos risus hac sodales quam curabitur fringilla nullam primis. Convallis amet lacus nunc, facilisi eleifend tincidunt accumsan. Vel scelerisque taciti venenatis elementum elit pellentesque. Lobortis mauris eget integer egestas turpis rhoncus nullam.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="js-accordion-container">
+                    <div class="js-accordion-wrapper">
+                        <div class="accordion-content">
+                            <div class="accordion-label" onclick="switchTextVisibility(document.querySelector('.js-accordion-text'))">JS accordion</div>
+                            <div class="accordion-text js-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos risus hac sodales quam curabitur fringilla nullam primis. Convallis amet lacus nunc, facilisi eleifend tincidunt accumsan. Vel scelerisque taciti venenatis elementum elit pellentesque. Lobortis mauris eget integer egestas turpis rhoncus nullam.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="css-radio-accordion-container">
+                    <div class="css-radio-accordion-wrapper">
+                        <div class="accordion-content">
+                            <input type="radio" name="css-radio-accordion" id="accordion-radio" />
+                            <label for="accordion-radio" class="accordion-label">CSS radio accordion</label>
+                            <div class="accordion-text css-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos risus hac sodales quam curabitur fringilla nullam primis. Convallis amet lacus nunc, facilisi eleifend tincidunt accumsan. Vel scelerisque taciti venenatis elementum elit pellentesque. Lobortis mauris eget integer egestas turpis rhoncus nullam.</div>
+
+                            <div class="accordion-close-container">
+                                <input type="radio" name="css-radio-accordion" id="accordion-close-radio" />
+                                <label for="accordion-close-radio" class="accordion-close-label">Close </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function switchTextVisibility(target) {
+                target.style.display == "block" ? (target.style.display = "none") : (target.style.display = "block");
+            }
+        </script>
+    </body>
+</html>
