@@ -1,0 +1,243 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <title>Sale card</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
+        <style>
+            :root {
+                --main-font-size: 1.5em;
+                --main-font-family: "Outfit", sans-serif;
+                --main-background-color: #799ee9;
+                --secondary-background-color: #ffffff;
+                --button-color: #00a1e7;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+            }
+            .advertisement-content {
+                position: relative;
+                display: grid;
+                height: 475px;
+                border-radius: 15px;
+                grid-template-columns: 7fr 13fr;
+                grid-template-rows: repeat(5, 1fr);
+                grid-template-areas:
+                    "discount image"
+                    "discount image"
+                    "buttons image"
+                    ". image"
+                    ". price";
+                font-family: var(--main-font-family);
+                font-size: var(--main-font-size);
+                background: var(--main-background-color);
+            }
+            .thin-background-line {
+                position: absolute;
+                left: 33%;
+                width: 9%;
+                height: 100%;
+                background: var(--secondary-background-color);
+                transform: skew(-20deg);
+                z-index: 1;
+            }
+            .thick-background-line {
+                position: absolute;
+                left: 53%;
+                width: 23%;
+                height: 100%;
+                background: var(--secondary-background-color);
+                transform: skew(-20deg);
+                z-index: 1;
+            }
+
+            /* discount info */
+            .discount-container {
+                grid-area: discount;
+                display: flex;
+                flex-basis: content;
+                flex-direction: column;
+                justify-content: end;
+                line-height: 1.4em;
+                padding-left: 19%;
+                padding-right: 5%;
+                padding-bottom: 1%;
+                z-index: 2;
+            }
+
+            .discount-header {
+                color: #b8860b;
+                font-size: 0.9em;
+                font-weight: 700;
+            }
+            .discount-item {
+                font-size: 1.6em;
+                font-weight: 800;
+            }
+            .item-type {
+                font-size: 0.8em;
+                font-weight: 600;
+                overflow: hidden;
+                text-align: center;
+            }
+            .item-type:before,
+            .item-type:after {
+                background-color: #000;
+                content: "";
+                display: inline-block;
+                height: 2px;
+                position: relative;
+                vertical-align: 20%;
+                width: 50%;
+            }
+            .item-type:before {
+                right: 0.5em;
+                margin-left: -50%;
+            }
+            .item-type:after {
+                left: 0.5em;
+                margin-right: -50%;
+            }
+            .sale-name {
+                font-size: 0.95em;
+                letter-spacing: 0.15em;
+                font-weight: 600;
+            }
+
+            /* buttons */
+            .add-buttons-container {
+                display: flex;
+                align-items: end;
+                grid-area: buttons;
+                padding-left: 18%;
+                z-index: 2;
+            }
+            .add-to-cart-button {
+                width: 75%;
+                height: 65%;
+                border: none;
+                border-radius: 15px;
+                background-color: var(--button-color);
+                color: #ffffff;
+                font-size: 0.6em;
+                font-weight: 700;
+            }
+            .add-to-favorite-button-wrapper {
+                display: flex;
+                width: 20%;
+                height: 65%;
+                padding-left: 2%;
+            }
+            .add-to-favorite-button {
+                font-size: 1.5em;
+                border: none;
+                background-color: transparent;
+                color: var(--button-color);
+            }
+            .add-to-cart-button:hover {
+                outline: 1px solid #ffffff;
+            }
+            .add-to-favorite-button:hover {
+                color: #ffffff;
+            }
+
+            /* image */
+            .item-image-container {
+                grid-area: image;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2;
+            }
+            .item-image {
+                max-width: 90%;
+                max-height: 90%;
+            }
+
+            /* price info */
+            .price-info-container {
+                grid-area: price;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-right: 5%;
+                z-index: 2;
+            }
+            .price-text-container {
+                margin-right: 3%;
+            }
+            .pre-price-text {
+                font-variant: small-caps;
+                font-weight: 600;
+                vertical-align: 44%;
+            }
+            .full-price-number {
+                color: #b35827;
+                font-size: 0.75em;
+                font-weight: 600;
+                vertical-align: text-bottom;
+            }
+            .integer-price-part {
+                font-size: 2em;
+                font-weight: 800;
+                vertical-align: sub;
+            }
+            .info-text-container {
+                text-align: center;
+                font-size: 0.65em;
+                line-height: 1.2em;
+            }
+            .start-shopping-text {
+                font-weight: 600;
+            }
+            .asterisk-info-text {
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="main-wrapper">
+                <!-- тестовое задание -->
+                <div class="advertisement-container">
+                    <div class="advertisement-wrapper">
+                        <div class="advertisement-content">
+                            <div class="thin-background-line"></div>
+                            <div class="thick-background-line"></div>
+                            <div class="discount-container">
+                                <div class="discount-header">EXTRA</div>
+                                <div class="discount-item">20% OFF</div>
+                                <div class="item-type">BIKES</div>
+                                <div class="sale-name">Summer Sale</div>
+                            </div>
+                            <div class="add-buttons-container">
+                                <button class="add-to-cart-button">Добавить в корзину</button>
+                                <div class="add-to-favorite-button-wrapper">
+                                    <button class="add-to-favorite-button">&#9825;</button>
+                                </div>
+                            </div>
+                            <div class="item-image-container">
+                                <img class="item-image" src="https://www.freeiconspng.com/uploads/bicycle-png-image-black-hd-13.png" alt="" />
+                            </div>
+                            <div class="price-info-container">
+                                <div class="price-text-container">
+                                    <span class="pre-price-text">only</span>
+                                    <span class="full-price-number">$<span class="integer-price-part">399</span>99</span>
+                                </div>
+                                <div class="info-text-container">
+                                    <div class="start-shopping-text">Start Shopping Right Now</div>
+                                    <div class="asterisk-info-text">* Get Plus Discount Buying Package</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / тестовое задание -->
+            </div>
+        </div>
+    </body>
+</html>
