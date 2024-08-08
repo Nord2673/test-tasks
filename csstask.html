@@ -4,14 +4,14 @@
     <head>
         <style>
             :root {
-                --color-red: #ff0000;
-                --color-green: #008000;
-                --color-blue: #0000ff;
-                --color-yellow: #ffff00;
+                --bg-color-red: #ff0000;
+                --bg-color-green: #008000;
+                --bg-color-blue: #0000ff;
+                --bg-color-yellow: #ffff00;
+                --bg-color-gray: #808080;
+                --bg-color-lightgray: #d3d3d3;
+                --bg-color-biege: #f5f5dc;
                 --color-black: #000000;
-                --color-gray: #808080;
-                --color-lightgray: #d3d3d3;
-                --color-biege: #f5f5dc;
                 --border-solid: solid;
                 --border-width: 4px;
                 --square-height: 100px;
@@ -27,11 +27,16 @@
                 margin: 0;
             }
 
+            .top-layer{
+                z-index: 1;
+            }
+            .shadow-layer{
+                z-index:-1;
+            }
             .header-container {
                 position: sticky;
                 top: 0;
-                z-index: 99;
-                background-color: var(--color-gray);
+                background-color: var(--bg-color-gray);
             }
             .header-squares-content {
                 display: flex;
@@ -43,12 +48,24 @@
                 left: 120px;
             }
 
+            .body-wrapper{
+                position: relative;
+            }
+            .body-shadow-container{
+                position: absolute;
+                width:72%;
+                margin-left: auto;
+                margin-right: auto;
+                height: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(to left,white,black 15%,black 85%,white);
+            }
             .body-squares-container {
                 width: 70%;
                 margin: auto;
-                background-color: var(--color-biege);
-                border-bottom: 2px dotted #000000;
-                box-shadow:  12px 0 15px -4px rgba(0, 0, 0, 0.2), -12px 0 8px -4px rgba(0, 0, 0, 0.19);
+                background-color: var(--bg-color-biege);
+                border-bottom: 2px dotted var(--color-black);
             }
             .body-squares-content {
                 position: relative;
@@ -56,12 +73,12 @@
                 justify-content: space-around;
                 height: var(--content-block-height);
             }
-            .body-squares-content-item-relative-position {
+            .body-squares-content-item-position-relative {
                 position: relative;
                 top: 20px;
                 left: 120px;
             }
-            .body-squares-content-item-absolute-position {
+            .body-squares-content-item-position-absolute {
                 position: absolute;
                 top: 100px;
                 left: 100px;
@@ -71,7 +88,7 @@
                 position: relative;
                 display: flex;
                 height: 200px;
-                background-color: var(--color-lightgray);
+                background-color: var(--bg-color-lightgray);
                 justify-content: center;
                 align-items: end;
             }
@@ -94,8 +111,8 @@
                 font-weight: 300;
             }
             .header-squares-content-item-position .squares-content-item-textbox,
-            .body-squares-content-item-relative-position .squares-content-item-textbox,
-            .body-squares-content-item-absolute-position .squares-content-item-textbox,
+            .body-squares-content-item-position-relative .squares-content-item-textbox,
+            .body-squares-content-item-position-absolute .squares-content-item-textbox,
             .footer-squares-content-item-position .squares-content-item-textbox {
                 font-size: 24px;
                 white-space: nowrap;
@@ -103,35 +120,35 @@
                 text-overflow: ellipsis;
             }
 
-            .red-bg-color {
-                background-color: var(--color-red);
+            .bg-color-red {
+                background-color: var(--bg-color-red);
             }
-            .green-bg-color {
-                background-color: var(--color-green);
+            .bg-color-green {
+                background-color: var(--bg-color-green);
             }
-            .blue-bg-color {
-                background-color: var(--color-blue);
+            .bg-color-blue {
+                background-color: var(--bg-color-blue);
             }
-            .yellow-bg-color {
-                background-color: var(--color-yellow);
+            .bg-color-yellow {
+                background-color: var(--bg-color-yellow);
             }
         </style>
     </head>
     <body>
         <!--тестовое задание -->
-        <div class="header-container">
+        <div class="header-container top-layer">
             <div class="header-wrapper">
                 <div class="header-squares-content">
-                    <div class="squares-content-item red-bg-color">
+                    <div class="squares-content-item bg-color-red">
                         <div class="squares-content-item-textbox">1</div>
                     </div>
-                    <div class="squares-content-item header-squares-content-item-position green-bg-color">
+                    <div class="squares-content-item header-squares-content-item-position bg-color-green">
                         <div class="squares-content-item-textbox">fixed</div>
                     </div>
-                    <div class="squares-content-item blue-bg-color">
+                    <div class="squares-content-item bg-color-blue">
                         <div class="squares-content-item-textbox">3</div>
                     </div>
-                    <div class="squares-content-item yellow-bg-color">
+                    <div class="squares-content-item bg-color-yellow">
                         <div class="squares-content-item-textbox">4</div>
                     </div>
                 </div>
@@ -140,18 +157,19 @@
 
         <div class="body-container">
             <div class="body-wrapper">
+                <div class="body-shadow-container shadow-layer"></div>
                 <div class="body-squares-container">
                     <div class="body-squares-content">
-                        <div class="squares-content-item red-bg-color">
+                        <div class="squares-content-item bg-color-red">
                             <div class="squares-content-item-textbox">1</div>
                         </div>
-                        <div class="squares-content-item body-squares-content-item-relative-position green-bg-color">
+                        <div class="squares-content-item body-squares-content-item-position-relative bg-color-green">
                             <div class="squares-content-item-textbox">relative</div>
                         </div>
-                        <div class="squares-content-item blue-bg-color">
+                        <div class="squares-content-item bg-color-blue">
                             <div class="squares-content-item-textbox">3</div>
                         </div>
-                        <div class="squares-content-item yellow-bg-color">
+                        <div class="squares-content-item bg-color-yellow">
                             <div class="squares-content-item-textbox">4</div>
                         </div>
                     </div>
@@ -159,16 +177,16 @@
 
                 <div class="body-squares-container">
                     <div class="body-squares-content">
-                        <div class="squares-content-item red-bg-color">
+                        <div class="squares-content-item bg-color-red">
                             <div class="squares-content-item-textbox">1</div>
                         </div>
-                        <div class="squares-content-item body-squares-content-item-absolute-position green-bg-color">
+                        <div class="squares-content-item body-squares-content-item-position-absolute bg-color-green">
                             <div class="squares-content-item-textbox">absolute</div>
                         </div>
-                        <div class="squares-content-item blue-bg-color">
+                        <div class="squares-content-item bg-color-blue">
                             <div class="squares-content-item-textbox">3</div>
                         </div>
-                        <div class="squares-content-item yellow-bg-color">
+                        <div class="squares-content-item bg-color-yellow">
                             <div class="squares-content-item-textbox">4</div>
                         </div>
                     </div>
@@ -179,16 +197,16 @@
         <div class="footer-container">
             <div class="footer-wrapper">
                 <div class="footer-squares-content">
-                    <div class="squares-content-item red-bg-color">
+                    <div class="squares-content-item bg-color-red">
                         <div class="squares-content-item-textbox">1</div>
                     </div>
-                    <div class="squares-content-item footer-squares-content-item-position green-bg-color">
+                    <div class="squares-content-item footer-squares-content-item-position bg-color-green">
                         <div class="squares-content-item-textbox">sticky</div>
                     </div>
-                    <div class="squares-content-item blue-bg-color">
+                    <div class="squares-content-item bg-color-blue">
                         <div class="squares-content-item-textbox">3</div>
                     </div>
-                    <div class="squares-content-item yellow-bg-color">
+                    <div class="squares-content-item bg-color-yellow">
                         <div class="squares-content-item-textbox">4</div>
                     </div>
                 </div>
