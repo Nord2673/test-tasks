@@ -9,8 +9,8 @@
             :root {
                 --main-font-size: 1.5em;
                 --main-font-family: "Outfit", sans-serif;
-                --main-background-color: #799ee9;
-                --secondary-background-color: #ffffff;
+                --main-bg-color: #799ee9;
+                --secondary-bg-color: #ffffff;
                 --button-color: #00a1e7;
             }
             * {
@@ -19,6 +19,14 @@
             body {
                 margin: 0;
             }
+
+            .background-additions-layer{
+                z-index: 1;
+            }
+            .content-layer{
+                z-index:2;
+            }
+
             .advertisement-content {
                 position: relative;
                 display: grid;
@@ -34,39 +42,35 @@
                     ". price";
                 font-family: var(--main-font-family);
                 font-size: var(--main-font-size);
-                background: var(--main-background-color);
+                background: var(--main-bg-color);
             }
             .thin-background-line {
                 position: absolute;
                 left: 33%;
                 width: 9%;
                 height: 100%;
-                background: var(--secondary-background-color);
+                background: var(--secondary-bg-color);
                 transform: skew(-20deg);
-                z-index: 1;
             }
             .thick-background-line {
                 position: absolute;
                 left: 53%;
                 width: 23%;
                 height: 100%;
-                background: var(--secondary-background-color);
+                background: var(--secondary-bg-color);
                 transform: skew(-20deg);
-                z-index: 1;
             }
 
             /* discount info */
             .discount-container {
                 grid-area: discount;
                 display: flex;
-                flex-basis: content;
                 flex-direction: column;
                 justify-content: end;
                 line-height: 1.4em;
                 padding-left: 19%;
                 padding-right: 5%;
                 padding-bottom: 1%;
-                z-index: 2;
             }
 
             .discount-header {
@@ -114,7 +118,6 @@
                 align-items: end;
                 grid-area: buttons;
                 padding-left: 18%;
-                z-index: 2;
             }
             .add-to-cart-button {
                 width: 75%;
@@ -151,7 +154,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                z-index: 2;
             }
             .item-image {
                 max-width: 90%;
@@ -165,7 +167,6 @@
                 justify-content: center;
                 align-items: center;
                 padding-right: 5%;
-                z-index: 2;
             }
             .price-text-container {
                 margin-right: 3%;
@@ -206,24 +207,24 @@
                 <div class="advertisement-container">
                     <div class="advertisement-wrapper">
                         <div class="advertisement-content">
-                            <div class="thin-background-line"></div>
-                            <div class="thick-background-line"></div>
-                            <div class="discount-container">
+                            <div class="thin-background-line background-additions-layer"></div>
+                            <div class="thick-background-line background-additions-layer"></div>
+                            <div class="discount-container content-layer">
                                 <div class="discount-header">EXTRA</div>
                                 <div class="discount-item">20% OFF</div>
                                 <div class="item-type">BIKES</div>
                                 <div class="sale-name">Summer Sale</div>
                             </div>
-                            <div class="add-buttons-container">
+                            <div class="add-buttons-container content-layer">
                                 <button class="add-to-cart-button">Добавить в корзину</button>
                                 <div class="add-to-favorite-button-wrapper">
                                     <button class="add-to-favorite-button">&#9825;</button>
                                 </div>
                             </div>
-                            <div class="item-image-container">
+                            <div class="item-image-container content-layer">
                                 <img class="item-image" src="https://www.freeiconspng.com/uploads/bicycle-png-image-black-hd-13.png" alt="" />
                             </div>
-                            <div class="price-info-container">
+                            <div class="price-info-container content-layer">
                                 <div class="price-text-container">
                                     <span class="pre-price-text">only</span>
                                     <span class="full-price-number">$<span class="integer-price-part">399</span>99</span>
