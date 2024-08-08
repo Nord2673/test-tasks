@@ -169,6 +169,8 @@
                 padding-right: 5%;
             }
             .price-text-container {
+                display: flex;
+                align-items: center;
                 margin-right: 3%;
             }
             .pre-price-text {
@@ -178,9 +180,11 @@
             }
             .full-price-number {
                 color: #b35827;
-                font-size: 0.75em;
-                font-weight: 600;
                 vertical-align: text-bottom;
+            }
+            .price-small-text {
+                font-size: 75%;
+                font-weight: 600;
             }
             .integer-price-part {
                 font-size: 150%;
@@ -216,10 +220,9 @@
                                 <div class="sale-name">Summer Sale</div>
                             </div>
                             <div class="add-buttons-container content-layer">
-                                <button class="add-to-cart-button">Добавить в корзину</button>
-                                <div class="add-to-favorite-button-wrapper">
-                                    <button class="add-to-favorite-button">&#9825;</button>
-                                </div>
+                                <div class="add-to-cart-button">Добавить в корзину</div>
+
+                                <div class="add-to-favorite-button">&#9825;</div>
                             </div>
                             <div class="item-image-container content-layer">
                                 <img class="item-image" src="https://www.freeiconspng.com/uploads/bicycle-png-image-black-hd-13.png" alt="" />
@@ -227,7 +230,7 @@
                             <div class="price-info-container content-layer">
                                 <div class="price-text-container">
                                     <span class="pre-price-text">only</span>
-                                    <span class="full-price-number">$<span class="integer-price-part">399</span>99</span>
+                                    <span class="full-price-number"><span class="price-currency price-small-text">$</span><span class="integer-price-part">399</span><span class="float-price-part price-small-text">99</span></span>
                                 </div>
                                 <div class="info-text-container">
                                     <div class="start-shopping-text">Start Shopping Right Now</div>
