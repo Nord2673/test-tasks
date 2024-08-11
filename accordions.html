@@ -30,11 +30,11 @@
                 font-size: var(--label-font-size);
             }
             .accordion-text {
-                font-size:16px;
+                font-size: 16px;
             }
 
             /*html*/
-            .html-accordion-text{
+            .html-accordion-text {
                 padding: 0;
                 max-height: 0;
                 transition: all 0.35s ease-in-out;
@@ -42,7 +42,7 @@
 
             /*css-js*/
             .css-accordion-text,
-            .js-accordion-text{
+            .js-accordion-text {
                 position: relative;
                 padding: 0;
                 max-height: 0;
@@ -71,7 +71,7 @@
                 justify-content: end;
                 color: #0000ff;
             }
-            .css-radio-accordion-close-button{
+            .css-radio-accordion-close-button {
                 position: absolute;
                 right: 0;
                 bottom: 0;
@@ -83,30 +83,38 @@
             }
 
             /*css-accordion with 3 lines of text*/
-            .accordion-expander-container{
-                display: flex;
-                justify-content: end;
-                right: 0;
-                bottom: 0;
-                margin-right: 10px;
-                justify-content: end;
-                color: #0000ff;
-            }
             .css-partial-view-accordion-text {
-                display: -webkit-box;
                 padding: 10px;
                 line-height: 120%;
                 max-height: 67px;
-                -webkit-line-clamp: 3;
-                line-clamp: 3;
-                -webkit-box-orient: vertical;
                 overflow: hidden;
+                transition: all 0.35s ease-in-out;
             }
-            
+            .accordion-expander-container {
+                position: absolute;
+                right: 10px;
+                bottom: 0;
+            }
+            .accordion-expander-text-hider {
+                position: absolute;
+                text-align: right;
+                margin-left: -30px;
+                padding-right: 3px;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to right, transparent, var(--accordion-color) 15px);
+                transition: all 0.35s ease-in-out;
+            }
+            .accordion-expander {
+                position: relative;
+                color: #0000ff;
+                background-color: var(--accordion-color);
+            }
+
             /*on click actions*/
             .css-accordion-checkbox:checked ~ .css-accordion-text,
             .css-radio-accordion-open-button:checked ~ .css-accordion-text,
-            .html-accordion-content[open] > .html-accordion-text{
+            .html-accordion-content[open] > .html-accordion-text {
                 padding: 10px;
                 max-height: 500px;
             }
@@ -128,7 +136,7 @@
                     <div class="css-accordion-wrapper">
                         <div class="accordion-content">
                             <label class="accordion-label">CSS accordion</label>
-                            <input type="checkbox" class="css-accordion-checkbox"/>
+                            <input type="checkbox" class="css-accordion-checkbox" />
                             <div class="accordion-text css-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos risus hac sodales quam curabitur fringilla nullam primis. Convallis amet lacus nunc, facilisi eleifend tincidunt accumsan. Vel scelerisque taciti venenatis elementum elit pellentesque. Lobortis mauris eget integer egestas turpis rhoncus nullam.</div>
                         </div>
                     </div>
@@ -147,13 +155,13 @@
                     <div class="css-radio-accordion-wrapper">
                         <div class="accordion-content">
                             <label class="accordion-label">CSS radio accordion</label>
-                            <input type="radio" name="css-radio-accordion" class="css-radio-accordion-open-button"/>
+                            <input type="radio" name="css-radio-accordion" class="css-radio-accordion-open-button" />
                             <div class="accordion-text css-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Inceptos risus hac sodales quam curabitur fringilla nullam primis. Convallis amet lacus nunc, facilisi eleifend tincidunt accumsan. Vel scelerisque taciti venenatis elementum elit pellentesque. Lobortis mauris eget integer egestas turpis rhoncus nullam.</div>
 
                             <div class="accordion-close-container">
                                 <div class="accordion-close-wrapper">
                                     <label class="accordion-close-label">Close </label>
-                                    <input type="radio" name="css-radio-accordion" class="css-radio-accordion-close-button"/>
+                                    <input type="radio" name="css-radio-accordion" class="css-radio-accordion-close-button" />
                                 </div>
                             </div>
                         </div>
@@ -165,6 +173,7 @@
                         <div class="accordion-content">
                             <div class="css-partial-view-accordion-text">Lorem ipsum odor amet, consectetuer adipiscing elit. Cubilia pharetra consectetur ad cras posuere. Etiam libero finibus integer dignissim placerat fusce amet auctor conubia. Adipiscing pharetra lacus laoreet in libero. Velit conubia pellentesque curae placerat; accumsan per lacus faucibus. Amet libero venenatis sagittis nulla tortor ante sollicitudin maximus. Pharetra nisi ultrices inceptos diam eleifend tincidunt torquent consequat. Ipsum risus ut himenaeos; adipiscing ex lacus. Class ligula condimentum porttitor tempus laoreet nascetur scelerisque. Ornare torquent magna praesent integer magnis ipsum sociosqu ac. Nisl sem fusce; porttitor odio eget penatibus hac. Eu urna rutrum hac integer platea. Potenti justo accumsan in lacus vulputate. Diam class etiam cursus aptent commodo libero in felis. Magna ac amet nisl fermentum, nec sem.</div>
                             <div class="accordion-expander-container">
+                                <div class="accordion-expander-text-hider">...</div>
                                 <div class="accordion-expander" onclick="switchExpanderAndText(this, event)">more</div>
                             </div>
                         </div>
@@ -177,25 +186,26 @@
 
             function switchTextVisibility(sender, event) {
                 let target = document.querySelector(".js-accordion-text");
-                if(target.style.maxHeight == "500px"){
+                if (target.style.maxHeight == "500px") {
                     target.style.maxHeight = "0px";
-                    target.style.padding = "0";
-                }else{
+                    target.style.padding = "0px";
+                } else {
                     target.style.maxHeight = "500px";
                     target.style.padding = "10px";
                 }
             }
 
             function switchExpanderAndText(sender, event) {
-                let target = document.querySelector('.css-partial-view-accordion-text')
-                if (target.style.display == "block") {
-                    target.style.display = "-webkit-box";
+                let target = document.querySelector(".css-partial-view-accordion-text");
+                let hider = document.querySelector(".accordion-expander-text-hider");
+                if (target.style.maxHeight == "1000px") {
                     target.style.maxHeight = "67px";
                     sender.innerHTML = "more";
+                    hider.innerHTML = "...";
                 } else {
-                    target.style.display = "block";
-                    target.style.maxHeight = "none";
+                    target.style.maxHeight = "1000px";
                     sender.innerHTML = "less";
+                    hider.innerHTML = "";
                 }
             }
 
