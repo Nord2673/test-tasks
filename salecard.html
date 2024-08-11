@@ -43,8 +43,10 @@
                 font-family: var(--main-font-family);
                 font-size: var(--main-font-size);
                 background: var(--main-bg-color);
+                overflow: hidden;
             }
-            .background-lines{
+
+            .background-lines {
                 position: absolute;
                 left: 33.5%;
                 width: 43%;
@@ -52,7 +54,7 @@
             }
             .background-lines::before {
                 position: absolute;
-                left:0;
+                left: 0;
                 content: "";
                 width: 21%;
                 height: 100%;
@@ -209,6 +211,72 @@
             }
             .asterisk-info-text {
                 font-size: 90%;
+            }
+
+            @media screen and (max-width: 576px) {
+                .advertisement-content {
+                    position: relative;
+                    display: grid;
+                    height: 700px;
+                    border-radius: 15px;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: repeat(7, 1fr);
+                    grid-template-areas:
+                        "discount"
+                        "discount"
+                        "buttons"
+                        "image"
+                        "image"
+                        "image"
+                        "price";
+                    font-family: var(--main-font-family);
+                    font-size: var(--main-font-size);
+                    background: var(--main-bg-color);
+                }
+                .discount-container {
+                    grid-area: discount;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: end;
+                    line-height: 140%;
+                    padding-left: 5%;
+                    padding-right: 20%;
+                    padding-bottom: 0;
+                }
+                .add-buttons-container {
+                    grid-area: buttons;
+                    display: flex;
+                    align-items: end;
+                    justify-items: center;
+                    padding-left: 10%;
+                }
+                .add-to-cart-button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 65%;
+                    width: 75%;
+                    border-radius: 15px;
+                    background-color: var(--button-color);
+                    color: #ffffff;
+                    font-size: 60%;
+                    font-weight: 700;
+                }
+                .price-info-container {
+                    grid-area: price;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: start;
+                    align-items: center;
+                    margin: 0;
+                    padding: 0;
+                }
+                .price-text-container {
+                    display: flex;
+                    align-items: center;
+                    margin: 0;
+                    line-height: 200%;
+                }
             }
         </style>
     </head>
