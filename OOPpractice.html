@@ -18,18 +18,18 @@
     <script>
         // тестовое задание
         class Human {
-            #surname; //инкапсуляция - приватные поля и геттеры к ним
-            #age;
+            _surname;
+            _age;
             constructor(name = "Иван", surname = "Иванов", age = "0") {
                 this.name = name;
-                this.#surname = surname;
-                this.#age = age;
+                this._surname = surname;
+                this._age = age;
             }
             get surname() {
-                return this.#surname;
+                return this._surname;
             }
             get age() {
-                return this.#age;
+                return this._age;
             }
             lifecycle() {
                 document.querySelector(".content-output").innerHTML += "Родился/-ась, пожил/-а, умер/-ла.\n\n";
