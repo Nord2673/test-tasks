@@ -19,7 +19,6 @@
             body {
                 margin: 0;
             }
-
             .background-additions-layer {
                 z-index: 1;
             }
@@ -27,23 +26,99 @@
                 z-index: 2;
             }
 
-            .advertisement-content {
-                position: relative;
-                display: grid;
-                height: 475px;
-                border-radius: 15px;
-                grid-template-columns: 7fr 13fr;
-                grid-template-rows: repeat(5, 1fr);
-                grid-template-areas:
-                    "discount image"
-                    "discount image"
-                    "buttons image"
-                    ". image"
-                    ". price";
-                font-family: var(--main-font-family);
-                font-size: var(--main-font-size);
-                background: var(--main-bg-color);
-                overflow: hidden;
+            @media screen and (max-width: 576px) {
+                .advertisement-content {
+                    height: 700px;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 0.5fr 1fr 1fr 0.5fr 1fr 1fr 0.9fr;
+                    grid-template-areas:
+                        "discount"
+                        "discount"
+                        "buttons"
+                        "image"
+                        "image"
+                        "image"
+                        "price";
+                }
+                .discount-container {
+                    width: 90%;
+                }
+                .add-buttons-container {
+                    align-items: end;
+                    width: 90%;
+                }
+                .add-to-cart-button {
+                    height: 65%;
+                }
+                .price-info-container {
+                    flex-direction: column;
+                    justify-content: start;
+                }
+                .price-text-container {
+                    line-height: 200%;
+                }
+            }
+
+            @media screen and (min-width: 576px) and (max-width: 992px) {
+                .advertisement-content {
+                    height: 475px;
+                    grid-template-columns: 7fr 13fr;
+                    grid-template-rows: 0.4fr 1fr 1fr 0.5fr 0.7fr;
+                    grid-template-areas:
+                        "discount image"
+                        "discount image"
+                        "buttons image"
+                        ". image"
+                        ". price";
+                }
+                .discount-container {
+                    width: 90%;
+                }
+                .add-buttons-container {
+                    align-items: center;
+                    width: 90%;
+                }
+                .add-to-cart-button {
+                    height: 48%;
+                }
+                .price-info-container {
+                    justify-content: center;
+                    padding-right: 5%;
+                }
+                .price-text-container {
+                    margin-right: 3%;
+                }
+            }
+
+            @media screen and (min-width: 992px) {
+                .advertisement-content {
+                    height: 475px;
+                    grid-template-columns: 7fr 13fr;
+                    grid-template-rows: repeat(5, 1fr);
+                    grid-template-areas:
+                        "discount image"
+                        "discount image"
+                        "buttons image"
+                        ". image"
+                        ". price";
+                }
+                .discount-container {
+                    width: 80%;
+                }
+                .add-buttons-container {
+                    align-items: end;
+                    width: 80%;
+                }
+                .add-to-cart-button {
+                    height: 65%;
+                }
+                .price-info-container {
+                    justify-content: center;
+                    padding-right: 5%;
+                }
+                .price-text-container {
+                    margin-right: 3%;
+                }
             }
 
             .background-lines {
@@ -71,6 +146,16 @@
                 transform: skew(-20deg);
             }
 
+            .advertisement-content {
+                position: relative;
+                display: grid;
+                border-radius: 15px;
+                font-family: var(--main-font-family);
+                font-size: var(--main-font-size);
+                background: var(--main-bg-color);
+                overflow: hidden;
+            }
+
             /* discount info */
             .discount-container {
                 grid-area: discount;
@@ -78,11 +163,11 @@
                 flex-direction: column;
                 justify-content: end;
                 line-height: 140%;
-                padding-left: 19%;
-                padding-right: 5%;
-                padding-bottom: 1%;
+                padding-left: 0;
+                padding-right: 0;
+                justify-self: center;
+                padding-bottom: 0;
             }
-
             .discount-header {
                 color: #b8860b;
                 font-size: 90%;
@@ -126,21 +211,23 @@
             .add-buttons-container {
                 grid-area: buttons;
                 display: flex;
-                align-items: end;
-                padding-left: 18%;
+                justify-content: center;
+                padding-left: 0;
+                padding-right: 0;
+                justify-self: center;
             }
             .add-to-cart-button {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 75%;
-                height: 65%;
+                width: 85%;
                 border-radius: 15px;
                 background-color: var(--button-color);
                 color: #ffffff;
                 font-size: 60%;
                 font-weight: 700;
             }
+
             .add-to-favorite-button {
                 display: flex;
                 align-items: center;
@@ -155,7 +242,7 @@
                 outline: 1px solid #ffffff;
             }
             .add-to-favorite-button:hover {
-                color: #ffffff;
+                color: #ff2020e3;
             }
 
             /* image */
@@ -174,15 +261,13 @@
             .price-info-container {
                 grid-area: price;
                 display: flex;
-                justify-content: center;
                 align-items: center;
-                padding-right: 5%;
             }
             .price-text-container {
                 display: flex;
                 align-items: center;
-                margin-right: 3%;
             }
+
             .pre-price-text {
                 font-variant: small-caps;
                 font-weight: 600;
@@ -211,72 +296,6 @@
             }
             .asterisk-info-text {
                 font-size: 90%;
-            }
-
-            @media screen and (max-width: 576px) {
-                .advertisement-content {
-                    position: relative;
-                    display: grid;
-                    height: 700px;
-                    border-radius: 15px;
-                    grid-template-columns: 1fr;
-                    grid-template-rows: repeat(7, 1fr);
-                    grid-template-areas:
-                        "discount"
-                        "discount"
-                        "buttons"
-                        "image"
-                        "image"
-                        "image"
-                        "price";
-                    font-family: var(--main-font-family);
-                    font-size: var(--main-font-size);
-                    background: var(--main-bg-color);
-                }
-                .discount-container {
-                    grid-area: discount;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: end;
-                    line-height: 140%;
-                    padding-left: 5%;
-                    padding-right: 20%;
-                    padding-bottom: 0;
-                }
-                .add-buttons-container {
-                    grid-area: buttons;
-                    display: flex;
-                    align-items: end;
-                    justify-items: center;
-                    padding-left: 10%;
-                }
-                .add-to-cart-button {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 65%;
-                    width: 75%;
-                    border-radius: 15px;
-                    background-color: var(--button-color);
-                    color: #ffffff;
-                    font-size: 60%;
-                    font-weight: 700;
-                }
-                .price-info-container {
-                    grid-area: price;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: start;
-                    align-items: center;
-                    margin: 0;
-                    padding: 0;
-                }
-                .price-text-container {
-                    display: flex;
-                    align-items: center;
-                    margin: 0;
-                    line-height: 200%;
-                }
             }
         </style>
     </head>
