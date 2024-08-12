@@ -54,7 +54,8 @@
                     flex-direction: column;
                     justify-content: start;
                 }
-                .price-text-container {
+                .pre-price-text,
+                .full-price-number {
                     line-height: 200%;
                 }
             }
@@ -83,7 +84,6 @@
                 }
                 .price-info-container {
                     justify-content: center;
-                    padding-right: 5%;
                 }
                 .price-text-container {
                     margin-right: 3%;
@@ -114,7 +114,6 @@
                 }
                 .price-info-container {
                     justify-content: center;
-                    padding-right: 5%;
                 }
                 .price-text-container {
                     margin-right: 3%;
@@ -146,14 +145,16 @@
                 transform: skew(-20deg);
             }
 
-            .advertisement-content {
-                position: relative;
-                display: grid;
-                border-radius: 15px;
+            .advertisement-wrapper {
                 font-family: var(--main-font-family);
                 font-size: var(--main-font-size);
                 background: var(--main-bg-color);
+                border-radius: 15px;
                 overflow: hidden;
+            }
+            .advertisement-content {
+                position: relative;
+                display: grid;
             }
 
             /* discount info */
@@ -162,29 +163,31 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: end;
-                line-height: 140%;
                 padding-left: 0;
                 padding-right: 0;
                 justify-self: center;
                 padding-bottom: 0;
             }
-            .discount-header {
+            .discount-header-text {
                 color: #b8860b;
                 font-size: 90%;
                 font-weight: 700;
+                line-height: 140%;
             }
-            .discount-item {
+            .discount-item-text {
                 font-size: 160%;
                 font-weight: 800;
+                line-height: 140%;
             }
-            .item-type {
+            .discount-item-type-text {
                 font-size: 80%;
                 font-weight: 600;
+                line-height: 140%;
                 overflow: hidden;
                 text-align: center;
             }
-            .item-type:before,
-            .item-type:after {
+            .discount-item-type-text:before,
+            .discount-item-type-text:after {
                 background-color: #000;
                 content: "";
                 display: inline-block;
@@ -193,16 +196,17 @@
                 vertical-align: 15%;
                 width: 50%;
             }
-            .item-type:before {
+            .discount-item-type-text:before {
                 right: 12px;
                 margin-left: -50%;
             }
-            .item-type:after {
+            .discount-item-type-text:after {
                 left: 12px;
                 margin-right: -50%;
             }
-            .sale-name {
+            .discount-sale-name-text {
                 font-size: 95%;
+                line-height: 140%;
                 letter-spacing: 4px;
                 font-weight: 600;
             }
@@ -223,9 +227,14 @@
                 width: 85%;
                 border-radius: 15px;
                 background-color: var(--button-color);
+            }
+            .add-to-cart-button-text {
                 color: #ffffff;
                 font-size: 60%;
                 font-weight: 700;
+            }
+            .add-to-cart-button:hover {
+                outline: 1px solid #ffffff;
             }
 
             .add-to-favorite-button {
@@ -235,11 +244,10 @@
                 width: 15%;
                 height: 65%;
                 padding-left: 2%;
+            }
+            .add-to-favorite-button-text{
                 font-size: 150%;
                 color: var(--button-color);
-            }
-            .add-to-cart-button:hover {
-                outline: 1px solid #ffffff;
             }
             .add-to-favorite-button:hover {
                 color: #ff2020e3;
@@ -286,7 +294,7 @@
                 font-weight: 800;
                 vertical-align: sub;
             }
-            .info-text-container {
+            .info-text-wrapper {
                 text-align: center;
                 font-size: 65%;
                 line-height: 120%;
@@ -308,15 +316,18 @@
                         <div class="advertisement-content">
                             <div class="background-lines background-additions-layer"></div>
                             <div class="discount-container content-layer">
-                                <div class="discount-header">EXTRA</div>
-                                <div class="discount-item">20% OFF</div>
-                                <div class="item-type">BIKES</div>
-                                <div class="sale-name">Summer Sale</div>
+                                <div class="discount-header-text">EXTRA</div>
+                                <div class="discount-item-text">20% OFF</div>
+                                <div class="discount-item-type-text">BIKES</div>
+                                <div class="discount-sale-name-text">Summer Sale</div>
                             </div>
                             <div class="add-buttons-container content-layer">
-                                <div class="add-to-cart-button">Добавить в корзину</div>
-
-                                <div class="add-to-favorite-button">&#9825;</div>
+                                <div class="add-to-cart-button">
+                                    <div class="add-to-cart-button-text">Добавить в корзину</div>
+                                </div>
+                                <div class="add-to-favorite-button">
+                                    <div class="add-to-favorite-button-text">&#9825;</div>
+                                </div>
                             </div>
                             <div class="item-image-container content-layer">
                                 <img class="item-image" src="https://www.freeiconspng.com/uploads/bicycle-png-image-black-hd-13.png" alt="" />
@@ -326,7 +337,7 @@
                                     <span class="pre-price-text">only</span>
                                     <span class="full-price-number"><span class="price-currency price-small-text">$</span><span class="integer-price-part">399</span><span class="float-price-part price-small-text">99</span></span>
                                 </div>
-                                <div class="info-text-container">
+                                <div class="info-text-wrapper">
                                     <div class="start-shopping-text">Start Shopping Right Now</div>
                                     <div class="asterisk-info-text">* Get Plus Discount Buying Package</div>
                                 </div>
