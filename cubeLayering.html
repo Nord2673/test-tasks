@@ -1,0 +1,214 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <title>Cube</title>
+        <style>
+            :root{
+                --layer-1-color: purple;
+                --layer-2-color: blue;
+                --layer-3-color: green;
+                --layer-4-color: yellow;
+                --layer-5-color: orange;
+                --layer-6-color: red;
+            }
+                        
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                font-size: 24px;
+                font-weight: 400;
+                line-height: 1.5;
+            }
+
+            .main-container {
+                width: 80%;
+                margin: auto;
+            }
+            .main-wrapper {
+                box-shadow: 0px 5px 10px 2px #223c5033;
+            }
+
+            /* #region input  */
+            .layers-amount-label {
+                display: inline-block;
+                text-align: right;
+            }
+            .layers-amount-input {
+                padding: 5px 5px;
+                max-width: 30px;
+                font-size: 20px;
+            }
+            .layers-amount-input:invalid + .validity::after {
+                position: absolute;
+                content: "✖";
+                padding-left: 5px;
+            }
+            .layers-amount-input:valid + .validity::after {
+                position: absolute;
+                content: "✓";
+                padding-left: 5px;
+            }
+            .button-container {
+                position: relative;
+                width: fit-content;
+                padding: 0px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                color: #fff;
+                background-color: #67bcb8;
+            }
+            /* #endregion input  */
+                        
+            .layer-6{
+                z-index: 6;
+                transform: translateZ(500px);
+            }
+            .layer-5{
+                z-index: 5;
+                transform: translateZ(400px);
+            }
+            .layer-4{
+                z-index: 4;
+                transform: translateZ(300px);
+            }
+            .layer-3{
+                z-index: 3;
+                transform: translateZ(200px);
+            }
+            .layer-2{
+                z-index: 2;
+                transform: translateZ(100px);
+            }
+            .layer-1{
+                z-index: 1;
+            }
+
+            .cube-container {
+                width: 500px;
+                height: 500px;
+                perspective: 800px;
+                perspective-origin: 50% -20%;
+                transform-style: preserve-3d;
+            }
+            .cube-side {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                backface-visibility: inherit;
+                font-size: 60px;
+                color: #fff;
+                border: 1px solid black;
+            }
+
+            .front {
+                background: rgb(0, 204, 0);
+                transform: translateZ(50px);
+            }
+            .back {
+                background: rgb(0, 204, 0);
+                transform: rotateY(180deg) translateZ(50px);
+            }
+            .right {
+                background: rgb(0, 204, 0);
+                transform: rotateY(90deg) translateZ(50px);
+            }
+            .left {
+                background: rgb(0, 204, 0);
+                transform: rotateY(-90deg) translateZ(50px);
+            }
+            .top {
+                background: rgba(210, 210, 0, 0.7);
+                transform: rotateX(90deg) translateZ(50px);
+            }
+            .bottom {
+                background: rgba(210, 0, 210, 0.7);
+                transform: rotateX(-90deg) translateZ(50px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="main-wrapper">
+                <div class="input-container">
+                    <div>
+                        <span class="layers-amount-label">Введите кол-во слоев (1-6):</span>
+                        <input type="text" class="layers-amount-input" name="layers-amount" required maxlength="1" />
+                        <span class="validity"></span>
+                    </div>
+                    <div class="button-container">
+                        <div class="button-wrapper">
+                            <div class="button-text" onclick="drawCube()">Подтвердить</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cube-container">
+                    <div class="cube-content">
+                        <div class="cube-side front front-layer">1</div>
+                        <div class="cube-side back back-layer">6</div>
+                        <div class="cube-side right front-layer">3</div>
+                        <div class="cube-side left back-layer">4</div>
+                        <div class="cube-side top back-layer">2</div>
+                        <div class="cube-side bottom front-layer">5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            class Cube {
+                width = "100px";
+                height = "100px";
+                posX;
+                posY;
+                posZ;
+                layer;
+                color;
+                constructor(posX, posY, posZ, layer, color) {
+                    this.posX = posX;
+                    this.posY = posY;
+                    this.posZ = posZ;
+                    this.layer = layer;
+                    this.color = color;
+                }
+                draw() {
+                    const container = document.createElement("div");
+                    container.classList.add(`layer-${this.layer}`);
+
+                    const front = document.createElement("div");
+                    front.classList.add("cube-side", "front");
+
+                    const back = document.createElement("div");
+                    back.classList.add("cube-side", "back");
+
+                    const right = document.createElement("div");
+                    right.classList.add("cube-side", "right");
+
+                    const left = document.createElement("div");
+                    left.classList.add("cube-side", "left");
+
+                    const top = document.createElement("div");
+                    top.classList.add("cube-side", "top");
+
+                    const bottom = document.createElement("div");
+                    bottom.classList.add("cube-side", "bottom");
+
+                    container.appendChild(front);
+                    container.appendChild(back);
+                    container.appendChild(right);
+                    container.appendChild(left);
+                    container.appendChild(top);
+                    container.appendChild(bottom);
+                }
+            }
+            function drawCube() {
+                layersAmount = document.querySelector(".layers-amount-input").value;
+                if (layersAmount < 7 && layersAmount > 0) {
+                }
+            }
+        </script>
+    </body>
+</html>
