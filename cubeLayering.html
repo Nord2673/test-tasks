@@ -62,30 +62,61 @@
             /* #endregion input  */
                         
             .layer-6{
+                --layer-color: red;
+                position: absolute;
                 z-index: 6;
                 transform: translateZ(500px);
+                background-color: var(--layer-6-color);
+                width: 100%;
+                height: 100%;
             }
             .layer-5{
+                --layer-color: orange;
+                position: absolute;
                 z-index: 5;
                 transform: translateZ(400px);
+                background-color: var(--layer-5-color);
+                width: 100%;
+                height: 100%;
             }
             .layer-4{
+                --layer-color: yellow;
+                position: absolute;
                 z-index: 4;
                 transform: translateZ(300px);
+                background-color: var(--layer-4-color);
+                width: 100%;
+                height: 100%;
             }
             .layer-3{
+                --layer-color: green;
+                position: absolute;
                 z-index: 3;
                 transform: translateZ(200px);
+                background-color: var(--layer-3-color);
+                width: 100%;
+                height: 100%;
             }
             .layer-2{
+                --layer-color: blue;
+                position: absolute;
                 z-index: 2;
                 transform: translateZ(100px);
+                background-color: var(--layer-2-color);
+                width: 100%;
+                height: 100%;
             }
             .layer-1{
+                --layer-color: purple;
+                position: absolute;
                 z-index: 1;
+                background-color: var(--layer-1-color);
+                width: 100%;
+                height: 100%;
             }
 
-            .cube-container {
+            .parent-cube-content {
+                position: relative;
                 width: 500px;
                 height: 500px;
                 perspective: 800px;
@@ -106,27 +137,31 @@
             }
 
             .front {
-                background: rgb(0, 204, 0);
+                background: var(--layer-color);
                 transform: translateZ(50px);
             }
             .back {
-                background: rgb(0, 204, 0);
+                background: var(--layer-color);
                 transform: rotateY(180deg) translateZ(50px);
             }
             .right {
-                background: rgb(0, 204, 0);
+                background: var(--layer-color);
+                filter: brightness(80%);
                 transform: rotateY(90deg) translateZ(50px);
             }
             .left {
-                background: rgb(0, 204, 0);
+                background: var(--layer-color);
+                filter: brightness(80%);
                 transform: rotateY(-90deg) translateZ(50px);
             }
             .top {
-                background: rgba(210, 210, 0, 0.7);
+                background: var(--layer-color);
+                filter: brightness(120%);
                 transform: rotateX(90deg) translateZ(50px);
             }
             .bottom {
-                background: rgba(210, 0, 210, 0.7);
+                background: var(--layer-color);
+                filter: brightness(50%);
                 transform: rotateX(-90deg) translateZ(50px);
             }
         </style>
@@ -146,67 +181,87 @@
                         </div>
                     </div>
                 </div>
-                <div class="cube-container">
-                    <div class="cube-content">
-                        <div class="cube-side front front-layer">1</div>
-                        <div class="cube-side back back-layer">6</div>
-                        <div class="cube-side right front-layer">3</div>
-                        <div class="cube-side left back-layer">4</div>
-                        <div class="cube-side top back-layer">2</div>
-                        <div class="cube-side bottom front-layer">5</div>
+                <div class="parent-cube-container">
+                    <div class="parent-cube-content">
+                        
                     </div>
                 </div>
             </div>
         </div>
         <script>
+            const test = [];
+            var testt = test.length;
             class Cube {
                 width = "100px";
                 height = "100px";
                 posX;
                 posY;
-                posZ;
                 layer;
-                color;
-                constructor(posX, posY, posZ, layer, color) {
+                constructor(posX, posY, layer) {
                     this.posX = posX;
                     this.posY = posY;
-                    this.posZ = posZ;
-                    this.layer = layer;
-                    this.color = color;
+                    this.layer = layer + 1;
                 }
                 draw() {
+                    const layerElement = document.querySelector(`.layer-${this.layer}`);
                     const container = document.createElement("div");
-                    container.classList.add(`layer-${this.layer}`);
-
                     const front = document.createElement("div");
-                    front.classList.add("cube-side", "front");
-
                     const back = document.createElement("div");
-                    back.classList.add("cube-side", "back");
-
                     const right = document.createElement("div");
-                    right.classList.add("cube-side", "right");
-
                     const left = document.createElement("div");
-                    left.classList.add("cube-side", "left");
-
                     const top = document.createElement("div");
-                    top.classList.add("cube-side", "top");
-
                     const bottom = document.createElement("div");
-                    bottom.classList.add("cube-side", "bottom");
 
+                    layerElement.appendChild(container);
+                    container.classList.add("small-cube-wrapper");
+                    //дописать сдвиг
                     container.appendChild(front);
+                    front.classList.add("cube-side", "front");
                     container.appendChild(back);
+                    back.classList.add("cube-side", "back");
                     container.appendChild(right);
+                    right.classList.add("cube-side", "right");
                     container.appendChild(left);
+                    left.classList.add("cube-side", "left");
                     container.appendChild(top);
+                    top.classList.add("cube-side", "top");
                     container.appendChild(bottom);
+                    bottom.classList.add("cube-side", "bottom");
                 }
             }
+
             function drawCube() {
-                layersAmount = document.querySelector(".layers-amount-input").value;
+                let layersAmount = document.querySelector(".layers-amount-input").value;
                 if (layersAmount < 7 && layersAmount > 0) {
+                    createLayers(layersAmount);
+                    createCubes(layersAmount);
+                }
+            }
+
+            function createLayers(layersAmount){
+                let bigCube = document.querySelector(".parent-cube-content");
+                for (let i = layersAmount; i > 0; i--) {
+                    bigCube.appendChild(document.createElement("div")).classList.add(`layer-${i}`);
+                }
+            }
+
+            function createCubes(layersAmount){
+                let amountOfCubes = Math.pow(layersAmount, 3);
+                let amountOfCubesInLayer = layersAmount * layersAmount;
+                let counter = 0;
+                const cubesInLayers = new Array(layersAmount);
+                for (let i = 0; i < layersAmount; i++) {
+                    cubesInLayers[i] = [];
+                }
+
+                while(counter < amountOfCubes) {
+                    let selectedLayer = Math.floor(Math.random() * layersAmount);
+                    let curLength = cubesInLayers[selectedLayer].length;
+                    if(curLength < amountOfCubesInLayer) {
+                        cubesInLayers[selectedLayer][curLength] = new Cube(curLength % layersAmount, Math.floor(curLength / layersAmount), selectedLayer);
+                        cubesInLayers[selectedLayer][curLength].draw();
+                        counter++;
+                    }
                 }
             }
         </script>
