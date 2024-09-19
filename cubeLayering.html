@@ -19,7 +19,7 @@
                 margin: 0;
                 font-size: 24px;
                 font-weight: 400;
-                line-height: 1.5;
+                line-height: 36px;
             }
 
             .main-container {
@@ -36,7 +36,7 @@
                 text-align: right;
             }
             .layers-amount-input {
-                padding: 5px 5px;
+                padding: 5px;
                 max-width: 30px;
                 font-size: 20px;
             }
@@ -56,73 +56,107 @@
                 padding: 0px 10px;
                 border-radius: 5px;
                 cursor: pointer;
-                color: #fff;
                 background-color: #67bcb8;
             }
-            /* #endregion input  */
-                        
-            .layer-6{
-                --layer-color: red;
-                position: absolute;
-                z-index: 6;
-                transform: translateZ(500px);
-                background-color: var(--layer-6-color);
-                width: 100%;
-                height: 100%;
+            .button-text{
+                color: #fff;
             }
+            /* #endregion input  */
+                     
+            /* region layers */
             .layer-5{
-                --layer-color: orange;
+                --layer-color: red;
+                --layer-translateZ: 500px;
                 position: absolute;
                 z-index: 5;
-                transform: translateZ(400px);
-                background-color: var(--layer-5-color);
+                transform: translateZ(var(--layer-translateZ));
+                /* background-color: var(--layer-6-color); */
                 width: 100%;
                 height: 100%;
             }
             .layer-4{
-                --layer-color: yellow;
+                --layer-color: orange;
+                --layer-translateZ: 400px;
                 position: absolute;
                 z-index: 4;
-                transform: translateZ(300px);
-                background-color: var(--layer-4-color);
+                transform: translateZ(var(--layer-translateZ));
+                /* background-color: var(--layer-5-color); */
                 width: 100%;
                 height: 100%;
             }
             .layer-3{
-                --layer-color: green;
+                --layer-color: yellow;
+                --layer-translateZ: 300px;
                 position: absolute;
                 z-index: 3;
-                transform: translateZ(200px);
-                background-color: var(--layer-3-color);
+                transform: translateZ(var(--layer-translateZ));
+                /* background-color: var(--layer-4-color); */
                 width: 100%;
                 height: 100%;
             }
             .layer-2{
-                --layer-color: blue;
+                --layer-color: green;
+                --layer-translateZ: 200px;
                 position: absolute;
                 z-index: 2;
-                transform: translateZ(100px);
-                background-color: var(--layer-2-color);
+                transform: translateZ(var(--layer-translateZ));
+                /* background-color: var(--layer-3-color); */
                 width: 100%;
                 height: 100%;
             }
             .layer-1{
-                --layer-color: purple;
+                --layer-color: blue;
+                --layer-translateZ: 100px;
+                display: flex;
+                flex-wrap: wrap;
                 position: absolute;
                 z-index: 1;
-                background-color: var(--layer-1-color);
+                transform: translateZ(var(--layer-translateZ));
+                /* background-color: var(--layer-2-color); */
                 width: 100%;
                 height: 100%;
             }
+            .layer-0{
+                --layer-color: purple;
+                --layer-translateZ: 0px;
+                display: flex;
+                flex-wrap: wrap;
+                position: absolute;
+                z-index: 0;
+                /* background-color: var(--layer-1-color); */
+                width: 100%;
+                height: 100%;
+            }
+            /* endregion layers */
 
-            .parent-cube-content {
-                position: relative;
-                width: 500px;
-                height: 500px;
-                perspective: 800px;
-                perspective-origin: 50% -20%;
+            .parent-cube-container {
+                margin-top: 50px;
+                margin-left: 100px;
+                height: 700px;
+            }
+            .parent-cube-wrapper {
+                /* width: 500px; */
+                perspective: 1000px;
+                perspective-origin: 150% -50%;
+                aspect-ratio: 1/1;
                 transform-style: preserve-3d;
             }
+
+            .child-cube-container{
+                position: absolute;
+                width: 100px;
+                height: 100px;
+            }
+            .child-cube-wrapper {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                perspective: calc(1200px - var(--layer-translateZ));
+                /* perspective-origin: 250% -50%; */
+                transform-style: preserve-3d;
+            }
+
+            /* region cube sides */
             .cube-side {
                 display: flex;
                 align-items: center;
@@ -131,8 +165,8 @@
                 height: 100px;
                 position: absolute;
                 backface-visibility: inherit;
-                font-size: 60px;
-                color: #fff;
+                /* font-size: 60px;
+                color: #fff; */
                 border: 1px solid black;
             }
 
@@ -164,6 +198,7 @@
                 filter: brightness(50%);
                 transform: rotateX(-90deg) translateZ(50px);
             }
+            /* endregion cube sides */
         </style>
     </head>
     <body>
@@ -182,50 +217,58 @@
                     </div>
                 </div>
                 <div class="parent-cube-container">
-                    <div class="parent-cube-content">
-                        
-                    </div>
+                    <div class="parent-cube-wrapper"></div>
                 </div>
             </div>
         </div>
         <script>
-            const test = [];
-            var testt = test.length;
             class Cube {
-                width = "100px";
-                height = "100px";
+                width = 100;
+                height = 100;
                 posX;
                 posY;
                 layer;
                 constructor(posX, posY, layer) {
                     this.posX = posX;
                     this.posY = posY;
-                    this.layer = layer + 1;
+                    this.layer = layer;
                 }
-                draw() {
+                draw(layersAmount) {
                     const layerElement = document.querySelector(`.layer-${this.layer}`);
+                    // const lineElement = layerElement.querySelector(`.layer-${this.posY}`);
                     const container = document.createElement("div");
+                    const wrapper = document.createElement("div");
                     const front = document.createElement("div");
                     const back = document.createElement("div");
                     const right = document.createElement("div");
                     const left = document.createElement("div");
                     const top = document.createElement("div");
                     const bottom = document.createElement("div");
-
+                    
                     layerElement.appendChild(container);
-                    container.classList.add("small-cube-wrapper");
-                    //дописать сдвиг
-                    container.appendChild(front);
+                    container.classList.add("child-cube-container");
+                    container.style.left = 100 / layersAmount * this.posX + "%";   //заполнение слева-направо снизу-вверх
+                    container.style.bottom = 100 / layersAmount * this.posY + "%";
+                    // container.style.left = this.posX * this.width + "px";   //заполнение слева-направо снизу-вверх
+                    // container.style.bottom = this.posY * this.width + "px";
+
+                    container.appendChild(wrapper);
+                    wrapper.classList.add("child-cube-wrapper");
+                    let perspectiveX = 50 + (layersAmount - this.posX + 1) * 100;
+                    let perspectiveY = -20 - (layersAmount - this.posY + 1) * 100;
+                    wrapper.style.perspectiveOrigin = `${perspectiveX}% ${perspectiveY}%`;
+
+                    wrapper.appendChild(front);
                     front.classList.add("cube-side", "front");
-                    container.appendChild(back);
+                    wrapper.appendChild(back);
                     back.classList.add("cube-side", "back");
-                    container.appendChild(right);
+                    wrapper.appendChild(right);
                     right.classList.add("cube-side", "right");
-                    container.appendChild(left);
+                    wrapper.appendChild(left);
                     left.classList.add("cube-side", "left");
-                    container.appendChild(top);
+                    wrapper.appendChild(top);
                     top.classList.add("cube-side", "top");
-                    container.appendChild(bottom);
+                    wrapper.appendChild(bottom);
                     bottom.classList.add("cube-side", "bottom");
                 }
             }
@@ -239,11 +282,21 @@
             }
 
             function createLayers(layersAmount){
-                let bigCube = document.querySelector(".parent-cube-content");
-                for (let i = layersAmount; i > 0; i--) {
-                    bigCube.appendChild(document.createElement("div")).classList.add(`layer-${i}`);
+                let cubeSideWidth = 100; //перенести
+                let parentCube = document.querySelector(".parent-cube-wrapper");
+                parentCube.style.width = layersAmount * cubeSideWidth + "px";
+                for (let i = layersAmount - 1; i > -1; i--) {
+                    const layer = document.createElement("div");
+                    parentCube.appendChild(layer).classList.add(`layer-${i}`);
+                    // createLines(layer, layersAmount);
                 }
             }
+
+            // function createLines(layer, layersAmount){
+            //     for (let i = 0; i < layersAmount; i++) {
+            //         layer.appendChild(document.createElement("div")).classList.add(`line-${i}`);
+            //     }
+            // }
 
             function createCubes(layersAmount){
                 let amountOfCubes = Math.pow(layersAmount, 3);
@@ -259,7 +312,7 @@
                     let curLength = cubesInLayers[selectedLayer].length;
                     if(curLength < amountOfCubesInLayer) {
                         cubesInLayers[selectedLayer][curLength] = new Cube(curLength % layersAmount, Math.floor(curLength / layersAmount), selectedLayer);
-                        cubesInLayers[selectedLayer][curLength].draw();
+                        cubesInLayers[selectedLayer][curLength].draw(layersAmount);
                         counter++;
                     }
                 }
