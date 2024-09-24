@@ -14,10 +14,14 @@
                 --cube-perspective: 1500px;
                 --cube-side-translate-distance: calc(var(--cube-side-length) / 2);
             }
-                        
-            * {
+
+            *,
+            *::before,
+            *::after {
+                -webkit-box-sizing: border-box;
                 box-sizing: border-box;
             }
+
             body {
                 margin: 0;
                 font-size: 24px;
@@ -54,20 +58,25 @@
                 padding-left: 5px;
             }
 
+            .isometry-side-block-container{
+                margin-top: 10px;
+                display: flex;
+            }
+            .isometry-side-label{
+                margin-right: 5px;
+            }
+
             .isometry-side-switch {
                 position: relative;
                 display: inline-block;
-                width: 60px;
+                width: 88px;
                 height: 34px;
             }
-            /* Hide default HTML checkbox */
             .isometry-side-switch-checkbox {
                 opacity: 0;
                 width: 0;
                 height: 0;
             }
-
-            /* The slider */
             .slider {
                 position: absolute;
                 cursor: pointer;
@@ -76,41 +85,37 @@
                 right: 0;
                 bottom: 0;
                 background-color: #2196F3;
-                -webkit-transition: .4s;
-                transition: .4s;
             }
             .slider:before {
                 position: absolute;
-                content: "";
+                content: "лево";
+                font-size: 20px;
+                line-height: 20px;
                 height: 26px;
-                width: 26px;
+                padding: 2px;
                 left: 4px;
                 bottom: 4px;
                 background-color: white;
-                -webkit-transition: .4s;
-                transition: .4s;
             }
-
             .isometry-side-switch-checkbox:focus + .slider {
                 box-shadow: 0 0 1px #2196F3;
             }
             .isometry-side-switch-checkbox:checked + .slider:before {
-                -webkit-transform: translateX(26px);
-                -ms-transform: translateX(26px);
-                transform: translateX(26px);
+                content: "право";
+                left: auto;
+                right: 4px;
             }
-
-            /* Rounded slider */
             .slider.round {
                 border-radius: 34px;
             }
             .slider.round:before {
-                border-radius: 50%;
+                border-radius: 34px;
             }
 
             .button-container {
                 position: relative;
                 width: fit-content;
+                margin-top: 10px;
                 padding: 0px 10px;
                 border-radius: 5px;
                 cursor: pointer;
@@ -199,7 +204,6 @@
                 width: 100%;
                 height: 100%;
                 perspective: calc(var(--cube-perspective) - var(--layer-translateZ));
-                /* perspective-origin: 250% -50%; */
                 transform-style: preserve-3d;
             }
 
@@ -227,12 +231,12 @@
             }
             .right {
                 background: var(--layer-color);
-                filter: brightness(80%);
+                filter: brightness(50%);
                 transform: rotateY(90deg) translateZ(var(--cube-side-translate-distance));
             }
             .left {
                 background: var(--layer-color);
-                filter: brightness(80%);
+                filter: brightness(50%);
                 transform: rotateY(-90deg) translateZ(var(--cube-side-translate-distance));
             }
             .top {
@@ -242,7 +246,7 @@
             }
             .bottom {
                 background: var(--layer-color);
-                filter: brightness(50%);
+                filter: brightness(20%);
                 transform: rotateX(-90deg) translateZ(var(--cube-side-translate-distance));
             }
             /* endregion cube sides */
@@ -255,9 +259,12 @@
                 <div class="input-container">
                     <div>
                         <span class="layers-amount-label">Введите кол-во слоев (1-6):</span>
-                        <input type="text" class="layers-amount-input" name="layers-amount" required maxlength="1" />
+                        <input type="text" class="layers-amount-input" name="layers-amount" maxlength="1" pattern="[1-6]{1}" required/>
                         <span class="validity"></span>
-                    
+                    </div>
+                
+                    <div class="isometry-side-block-container">
+                        <div class="isometry-side-label">Сторона изометрии: </div>
                         <div class="isometry-side-switch-container">
                             <label class="isometry-side-switch">
                                 <input type="checkbox" class="isometry-side-switch-checkbox" onclick="changeIsometrySide(this)">
@@ -370,7 +377,7 @@
                 parentCubeWrapper.classList.add("parent-cube-wrapper");
                 parentCubeWrapper.style.width = layersAmount * cubeSideWidth + "px";
                 if (isometrySide) {
-                    parentCubeWrapper.style.sperspectiveOrigin = "150% -50%";
+                    parentCubeWrapper.style.perspectiveOrigin = "150% -50%";
                 } else {
                     parentCubeWrapper.style.perspectiveOrigin = "-50% -50%";
                 }
