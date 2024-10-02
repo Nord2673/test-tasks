@@ -10,6 +10,7 @@
                 --layer-2-color: yellow;
                 --layer-1-color: orange;
                 --layer-0-color: red;
+                --layer-z-index-step: 100;
                 --cube-side-length: 75px;
                 --cube-perspective: 1500px;
                 --cube-side-translate-distance: calc(var(--cube-side-length) / 2);
@@ -129,6 +130,8 @@
             /* region layers */
             .layer {
                 position: absolute;
+                display: flex;
+                flex-wrap: wrap;
                 width: 100%;
                 height: 100%;
                 transform-style: preserve-3d;
@@ -136,35 +139,35 @@
             .layer-5 {
                 --layer-color: var(--layer-5-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 5);
-                z-index: 5;
+                z-index: calc(var(--layer-z-index-step) * 5);
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-5-color); */
             }
             .layer-4 {
                 --layer-color: var(--layer-4-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 4);
-                z-index: 4;
+                z-index: calc(var(--layer-z-index-step) * 4);
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-4-color); */
             }
             .layer-3 {
                 --layer-color: var(--layer-3-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 3);
-                z-index: 3;
+                z-index: calc(var(--layer-z-index-step) * 3);
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-3-color); */
             }
             .layer-2 {
                 --layer-color: var(--layer-2-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 2);
-                z-index: 2;
+                z-index: calc(var(--layer-z-index-step) * 2);
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-2-color); */
             }
             .layer-1 {
                 --layer-color: var(--layer-1-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 1);
-                z-index: 1;
+                z-index: calc(var(--layer-z-index-step) * 1);
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-1-color); */
             }
@@ -195,7 +198,7 @@
             }
 
             .child-cube-container {
-                position: absolute;
+                /* position: absolute; */
                 width: var(--cube-side-length);
                 height: var(--cube-side-length);
             }
@@ -298,7 +301,7 @@
                     this.posY = posY;
                     this.layer = layer;
                 }
-                draw(layersAmount, isometrySide) {
+                draw(layersAmount, layersZIndexStep, isometrySide) {
                     const layerElement = document.querySelector(`.layer-${this.layer}`);
                     // const lineElement = layerElement.querySelector(`.layer-${this.posY}`);
                     const container = document.createElement("div");
@@ -315,18 +318,25 @@
                     container.appendChild(wrapper);
                     wrapper.classList.add("child-cube-wrapper");
 
-                    container.style.bottom = (100 / layersAmount) * this.posY + "%";
+                    // container.style.bottom = (100 / layersAmount) * this.posY + "%";
                     let perspectiveX;
+                    let zIndex;
                     if (isometrySide) {
-                        container.style.left = (100 / layersAmount) * this.posX + "%"; //заполнение слева-направо
+                        // container.style.left = (100 / layersAmount) * this.posX + "%"; //заполнение слева-направо
                         perspectiveX = layersAmount * 50 + (layersAmount - this.posX) * 100;
+                        zIndex = layersZIndexStep * this.layer + (layersAmount - this.posY - 1) * 10 + this.posX;
                     } else {
-                        container.style.right = (100 / layersAmount) * this.posX + "%"; //заполнение справа-налево
-                        perspectiveX = -layersAmount * 50 - (layersAmount - this.posX - 1) * 100;
+                        // container.style.right = (100 / layersAmount) * this.posX + "%"; //заполнение справа-налево
+                        // perspectiveX = -layersAmount * 50 - (layersAmount - this.posX - 1) * 100;
+                        perspectiveX = -layersAmount * 50 - this.posX * 100;
+                        zIndex = layersZIndexStep * this.layer + (layersAmount - this.posY - 1) * 10 + layersAmount - this.posX;
                     }
 
-                    let perspectiveY = -50 * layersAmount - (layersAmount - this.posY - 1) * 100;
+                    // let perspectiveY = -50 * layersAmount - (layersAmount - this.posY - 1) * 100;
+                    let perspectiveY = -50 * layersAmount - this.posY * 100;
+
                     wrapper.style.perspectiveOrigin = `${perspectiveX}% ${perspectiveY}%`;
+                    wrapper.style.zIndex = zIndex;
 
                     wrapper.appendChild(front);
                     front.classList.add("cube-side", "front");
@@ -402,6 +412,7 @@
             function createCubes(layersAmount, isometrySide) {
                 let amountOfCubes = Math.pow(layersAmount, 3);
                 let amountOfCubesInLayer = layersAmount * layersAmount;
+                let layersZIndexStep = getComputedStyle(document.body).getPropertyValue("--layer-z-index-step");
                 let counter = 0;
                 const cubesInLayers = new Array(layersAmount);
                 for (let i = 0; i < layersAmount; i++) {
@@ -413,7 +424,7 @@
                     let curLength = cubesInLayers[selectedLayer].length;
                     if (curLength < amountOfCubesInLayer) {
                         cubesInLayers[selectedLayer][curLength] = new Cube(curLength % layersAmount, Math.floor(curLength / layersAmount), selectedLayer);
-                        cubesInLayers[selectedLayer][curLength].draw(layersAmount, isometrySide);
+                        cubesInLayers[selectedLayer][curLength].draw(layersAmount, layersZIndexStep, isometrySide);
                         counter++;
                     }
                 }
