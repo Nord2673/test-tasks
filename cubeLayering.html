@@ -3,7 +3,7 @@
     <head>
         <title>Cube</title>
         <style>
-            :root{
+            :root {
                 --layer-5-color: purple;
                 --layer-4-color: blue;
                 --layer-3-color: green;
@@ -58,11 +58,11 @@
                 padding-left: 5px;
             }
 
-            .isometry-side-block-container{
+            .isometry-side-block-container {
                 margin-top: 10px;
                 display: flex;
             }
-            .isometry-side-label{
+            .isometry-side-label {
                 margin-right: 5px;
             }
 
@@ -84,7 +84,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background-color: #2196F3;
+                background-color: #2196f3;
             }
             .slider:before {
                 position: absolute;
@@ -98,7 +98,7 @@
                 background-color: white;
             }
             .isometry-side-switch-checkbox:focus + .slider {
-                box-shadow: 0 0 1px #2196F3;
+                box-shadow: 0 0 1px #2196f3;
             }
             .isometry-side-switch-checkbox:checked + .slider:before {
                 content: "право";
@@ -121,54 +121,54 @@
                 cursor: pointer;
                 background-color: #67bcb8;
             }
-            .button-text{
+            .button-text {
                 color: #fff;
             }
             /* #endregion input  */
-                     
+
             /* region layers */
-            .layer{
+            .layer {
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 transform-style: preserve-3d;
             }
-            .layer-5{
+            .layer-5 {
                 --layer-color: var(--layer-5-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 5);
                 z-index: 5;
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-5-color); */
             }
-            .layer-4{
+            .layer-4 {
                 --layer-color: var(--layer-4-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 4);
                 z-index: 4;
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-4-color); */
             }
-            .layer-3{
+            .layer-3 {
                 --layer-color: var(--layer-3-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 3);
                 z-index: 3;
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-3-color); */
             }
-            .layer-2{
+            .layer-2 {
                 --layer-color: var(--layer-2-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 2);
                 z-index: 2;
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-2-color); */
             }
-            .layer-1{
+            .layer-1 {
                 --layer-color: var(--layer-1-color);
                 --layer-translateZ: calc(var(--cube-side-length) * 1);
                 z-index: 1;
                 transform: translateZ(var(--layer-translateZ));
                 /* background-color: var(--layer-1-color); */
             }
-            .layer-0{
+            .layer-0 {
                 --layer-color: var(--layer-0-color);
                 --layer-translateZ: 0px;
                 z-index: 0;
@@ -176,7 +176,7 @@
             }
             /* endregion layers */
 
-            .draw-field{
+            .draw-field {
                 height: 800px;
                 overflow: hidden;
                 border: 1px solid black;
@@ -194,7 +194,7 @@
                 transform-style: preserve-3d;
             }
 
-            .child-cube-container{
+            .child-cube-container {
                 position: absolute;
                 width: var(--cube-side-length);
                 height: var(--cube-side-length);
@@ -252,22 +252,22 @@
             /* endregion cube sides */
         </style>
     </head>
-    
+
     <body>
         <div class="main-container">
             <div class="main-wrapper">
                 <div class="input-container">
                     <div>
                         <span class="layers-amount-label">Введите кол-во слоев (1-6):</span>
-                        <input type="text" class="layers-amount-input" name="layers-amount" maxlength="1" pattern="[1-6]{1}" required/>
+                        <input type="text" class="layers-amount-input" name="layers-amount" maxlength="1" pattern="[1-6]{1}" required />
                         <span class="validity"></span>
                     </div>
-                
+
                     <div class="isometry-side-block-container">
-                        <div class="isometry-side-label">Сторона изометрии: </div>
+                        <div class="isometry-side-label">Сторона изометрии:</div>
                         <div class="isometry-side-switch-container">
                             <label class="isometry-side-switch">
-                                <input type="checkbox" class="isometry-side-switch-checkbox" onclick="changeIsometrySide(this)">
+                                <input type="checkbox" class="isometry-side-switch-checkbox" onclick="changeIsometrySide(this)" />
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -309,22 +309,22 @@
                     const left = document.createElement("div");
                     const top = document.createElement("div");
                     const bottom = document.createElement("div");
-                    
+
                     layerElement.appendChild(container);
                     container.classList.add("child-cube-container");
                     container.appendChild(wrapper);
                     wrapper.classList.add("child-cube-wrapper");
 
-                    container.style.bottom = 100 / layersAmount * this.posY + "%";
+                    container.style.bottom = (100 / layersAmount) * this.posY + "%";
                     let perspectiveX;
-                    if(isometrySide){
-                        container.style.left = 100 / layersAmount * this.posX + "%"; //заполнение слева-направо
+                    if (isometrySide) {
+                        container.style.left = (100 / layersAmount) * this.posX + "%"; //заполнение слева-направо
                         perspectiveX = layersAmount * 50 + (layersAmount - this.posX) * 100;
                     } else {
-                        container.style.right = 100 / layersAmount * this.posX + "%"; //заполнение справа-налево
+                        container.style.right = (100 / layersAmount) * this.posX + "%"; //заполнение справа-налево
                         perspectiveX = -layersAmount * 50 - (layersAmount - this.posX - 1) * 100;
                     }
-                    
+
                     let perspectiveY = -50 * layersAmount - (layersAmount - this.posY - 1) * 100;
                     wrapper.style.perspectiveOrigin = `${perspectiveX}% ${perspectiveY}%`;
 
@@ -343,10 +343,10 @@
                 }
             }
 
-            function changeIsometrySide(isometrySideCheckbox){
+            function changeIsometrySide(isometrySideCheckbox) {
                 let existingCube = document.querySelector(".parent-cube-wrapper");
 
-                if (existingCube){
+                if (existingCube) {
                     drawCube(isometrySideCheckbox.checked);
                 }
             }
@@ -358,9 +358,9 @@
                 if (isometrySide === undefined) {
                     isometrySide = document.querySelector(".isometry-side-switch-checkbox").checked;
                 }
-                
+
                 if (layersAmount < 7 && layersAmount > 0) {
-                    if(existingCube) {
+                    if (existingCube) {
                         existingCube.remove();
                     }
                     createParentCubeWrapper(layersAmount, cubeSideWidth, isometrySide);
@@ -369,7 +369,7 @@
                 }
             }
 
-            function createParentCubeWrapper(layersAmount, cubeSideWidth, isometrySide){
+            function createParentCubeWrapper(layersAmount, cubeSideWidth, isometrySide) {
                 const parentCubeContainer = document.querySelector(".parent-cube-container");
                 const parentCubeWrapper = document.createElement("div");
 
@@ -383,7 +383,7 @@
                 }
             }
 
-            function createLayers(layersAmount){
+            function createLayers(layersAmount) {
                 let parentCube = document.querySelector(".parent-cube-wrapper");
 
                 for (let i = layersAmount - 1; i > -1; i--) {
@@ -399,7 +399,7 @@
             //     }
             // }
 
-            function createCubes(layersAmount, isometrySide){
+            function createCubes(layersAmount, isometrySide) {
                 let amountOfCubes = Math.pow(layersAmount, 3);
                 let amountOfCubesInLayer = layersAmount * layersAmount;
                 let counter = 0;
@@ -408,10 +408,10 @@
                     cubesInLayers[i] = [];
                 }
 
-                while(counter < amountOfCubes) {
+                while (counter < amountOfCubes) {
                     let selectedLayer = Math.floor(Math.random() * layersAmount);
                     let curLength = cubesInLayers[selectedLayer].length;
-                    if(curLength < amountOfCubesInLayer) {
+                    if (curLength < amountOfCubesInLayer) {
                         cubesInLayers[selectedLayer][curLength] = new Cube(curLength % layersAmount, Math.floor(curLength / layersAmount), selectedLayer);
                         cubesInLayers[selectedLayer][curLength].draw(layersAmount, isometrySide);
                         counter++;
