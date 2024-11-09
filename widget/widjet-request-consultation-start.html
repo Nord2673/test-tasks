@@ -119,6 +119,9 @@
     .webCustomized-info-svg {
         flex-shrink: 0;
     }
+    .webCustomized-info-label{
+        flex: none;
+    }
     /*#endregion webCustomized-info */
 
     /*#region typography-desktop - v 1.0.3 */
@@ -762,7 +765,11 @@
                                                 <path fill="currentColor" d="M13 12a1 1 0 1 0-2 0v4a1 1 0 1 0 2 0v-4Zm-1-5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"></path>
                                                 <path fill="currentColor" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12Zm11-9a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path>
                                             </svg>
-                                            <span>Время работы с 09.00 до 19.00 (мск)</span>
+                                            <span class="webCustomized-info-text">Время работы с 09.00 до 19.00 (мск)</span>
+                                            <label class = "webCustomized-info-label">
+                                                <input type="checkbox" class="webCustomized-info-checkbox" />
+                                                Местное время
+                                            </label>
                                         </div>
 
                                         <!-- Time Picker -->
@@ -5076,18 +5083,41 @@
 
             RequestConsultation.$WorkTimeHourValueStart = 9;
             RequestConsultation.$WorkTimeHourValueEnd = 19;
+            RequestConsultation.$TimeZoneHourOffset = RequestConsultation.GetTimezoneHourOffset();
 
             RequestConsultation.GetTimePickerComponent();
             RequestConsultation.TimePickerInit();
 
+            RequestConsultation.$appRequestConsultationTimezoneCheckbox = document.querySelector(".webCustomized-info-checkbox");
+            RequestConsultation.$appRequestConsultationTimezoneCheckbox.addEventListener("click", RequestConsultation.ChangeWebCustomizedInfoText);
+
             // Request consultation UI
             RequestConsultation.$appRequestConsultationUI = document.querySelector(".app-request-consultation-ui");
             // Calback error
-            RequestConsultation.$appRequestConsultationCallbackError = document.querySelector(".app-request-consultation-callback-error");
-            RequestConsultation.$appRequestConsultationCloseCallbackErrorBtn = document.querySelector(".app-request-consultation-close-callback-error");
-            RequestConsultation.$appRequestConsultationCloseCallbackErrorBtn.addEventListener("click", RequestConsultation.CloseErrorCallbackUI);
+            // RequestConsultation.$appRequestConsultationCallbackError = document.querySelector(".app-request-consultation-callback-error");
+            // RequestConsultation.$appRequestConsultationCloseCallbackErrorBtn = document.querySelector(".app-request-consultation-close-callback-error");
+            // RequestConsultation.$appRequestConsultationCloseCallbackErrorBtn.addEventListener("click", RequestConsultation.CloseErrorCallbackUI);
             // Calback success
-            RequestConsultation.$appRequestConsultationCallbackSuccess = document.querySelector(".app-request-consultation-callback-success");
+            // RequestConsultation.$appRequestConsultationCallbackSuccess = document.querySelector(".app-request-consultation-callback-success");
+        }
+
+        static GetTimezoneHourOffset() {
+            const mskTimeOffset = -180;
+            const localTimeOffset = new Date().getTimezoneOffset();
+
+            return (localTimeOffset - mskTimeOffset) / 60;
+        }
+
+        static ChangeWebCustomizedInfoText() {
+            const infoText = document.querySelector(".webCustomized-info-text");
+            if (this.checked) { 
+                let localStart = RequestConsultation.$WorkTimeHourValueStart + RequestConsultation.$TimeZoneHourOffset;
+                let localEnd = RequestConsultation.$WorkTimeHourValueEnd + RequestConsultation.$TimeZoneHourOffset;
+                infoText.innerHTML = `Время работы с ${("0" + localStart).slice(-2)}.00  до ${("0" + localEnd).slice(-2)}.00 (местное время)`;
+            } 
+            else {
+                infoText.innerHTML = "Время работы с 09.00 до 19.00 (мск)";
+            }
         }
 
         static GetTimePickerComponent() {
@@ -5307,6 +5337,7 @@
                         this.renderDefault();
                     },
                     timepickerSubmit: function () {
+                        if (RequestConsultation.$appRequestConsultationTimezoneCheckbox.checked) this.hour += RequestConsultation.$TimeZoneHourOffset;
                         var hourPattern = this.selectedPattern == 12 && this.pattern == 1 ? this.hour + 12 : this.hour;
                         var hourValue = ("0" + hourPattern).slice(-2);
                         var minuteValue = ("0" + this.minute).slice(-2);
@@ -5359,9 +5390,11 @@
                 //        RequestConsultation.SetErrorUI();
                 //    }
                 //}
+                console.log("success");
                 RequestConsultation.SetSuccessUI();
             } else {
                 // error status
+                console.log("fail");
                 RequestConsultation.SetErrorUI();
             }
         }
@@ -5376,18 +5409,18 @@
         }
 
         static CloseErrorCallbackUI() {
-            RequestConsultation.$appRequestConsultationUI.style.opacity = 1;
-            RequestConsultation.$appRequestConsultationCallbackError.classList.add("hidden-element");
+            // RequestConsultation.$appRequestConsultationUI.style.opacity = 1;
+            // RequestConsultation.$appRequestConsultationCallbackError.classList.add("hidden-element");
         }
 
         static SetSuccessUI() {
-            RequestConsultation.$appRequestConsultationUI.style.opacity = 0;
-            RequestConsultation.$appRequestConsultationCallbackSuccess.classList.remove("hidden-element");
+            // RequestConsultation.$appRequestConsultationUI.style.opacity = 0;
+            // RequestConsultation.$appRequestConsultationCallbackSuccess.classList.remove("hidden-element");
         }
 
         static SetErrorUI() {
-            RequestConsultation.$appRequestConsultationUI.style.opacity = 0;
-            RequestConsultation.$appRequestConsultationCallbackError.classList.remove("hidden-element");
+            // RequestConsultation.$appRequestConsultationUI.style.opacity = 0;
+            // RequestConsultation.$appRequestConsultationCallbackError.classList.remove("hidden-element");
         }
 
         static TimePickerInit() {
