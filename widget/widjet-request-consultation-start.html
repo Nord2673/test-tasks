@@ -119,8 +119,10 @@
     .webCustomized-info-svg {
         flex-shrink: 0;
     }
-    .webCustomized-info-label{
-        flex: none;
+    .webCustomized-controls{
+        display: flex;
+        flex-direction: column;
+        flex:none;
     }
     /*#endregion webCustomized-info */
 
@@ -754,10 +756,10 @@
                                     <!-- Request consultation -->
                                     <div class="app-request-consultation-ui">
                                         <div class="atoms-text atoms-text-default mb-8-a">
-                                            <span class="tsHeadline600Medium">Запрос консультации</span>
+                                            <span class="app-request-consultation-ui-headline tsHeadline600Medium">Запрос консультации</span>
                                         </div>
                                         <div class="atoms-text components-rich-string-light">
-                                            <span class="tsBody400Small">Выберите удобное для Вас время (мск) и отправьте запрос. Мы обязательно свяжемся с Вами.</span>
+                                            <span class="app-request-consultation-ui-text tsBody400Small">Выберите удобное для Вас время (мск) и отправьте запрос. Мы обязательно свяжемся с Вами.</span>
                                         </div>
 
                                         <div class="webCustomized-info tsBody300XSmall mb-16-a">
@@ -766,15 +768,21 @@
                                                 <path fill="currentColor" d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12Zm11-9a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"></path>
                                             </svg>
                                             <span class="webCustomized-info-text">Время работы с 09.00 до 19.00 (мск)</span>
-                                            <label class = "webCustomized-info-label">
-                                                <input type="checkbox" class="webCustomized-info-checkbox" />
-                                                Местное время
-                                            </label>
+                                            <div class = "webCustomized-controls">
+                                                <label class = "webCustomized-controls-timezone-label">
+                                                    <input type="checkbox" class="webCustomized-controls-timezone-checkbox" />
+                                                    Местное время
+                                                </label>
+                                                <label class = "webCustomized-controls-showSeconds-label">
+                                                    <input type="checkbox" class="webCustomized-controls-showSeconds-checkbox" v-model="showSeconds" />
+                                                    Показать секунды
+                                                </label>
+                                            </div>
                                         </div>
 
                                         <!-- Time Picker -->
                                         <div id="app-request-consultation" class="app-request-consultation">
-                                            <zxc-time-picker lang="ru" v-bind:show-hours="true" v-bind:show-minutes="true" v-bind:show-seconds="true"></zxc-time-picker>
+                                            <zxc-time-picker lang="ru" v-bind:show-hours="true" v-bind:show-minutes="true" v-bind:show-seconds="false"></zxc-time-picker>
                                         </div>
                                         <!-- / Time Picker -->
                                     </div>
@@ -5088,8 +5096,11 @@
             RequestConsultation.GetTimePickerComponent();
             RequestConsultation.TimePickerInit();
 
-            RequestConsultation.$appRequestConsultationTimezoneCheckbox = document.querySelector(".webCustomized-info-checkbox");
-            RequestConsultation.$appRequestConsultationTimezoneCheckbox.addEventListener("click", RequestConsultation.ChangeWebCustomizedInfoText);
+            RequestConsultation.$appRequestConsultationTimezoneCheckbox = document.querySelector(".webCustomized-controls-timezone-checkbox");
+            RequestConsultation.$appRequestConsultationTimezoneCheckbox.addEventListener("click", RequestConsultation.ChangeTimezoneText);
+
+            RequestConsultation.$appRequestConsultationShowSecondsCheckbox = document.querySelector(".webCustomized-controls-showSeconds-checkbox");
+            RequestConsultation.$appRequestConsultationShowSecondsCheckbox.addEventListener("click", RequestConsultation.ChangeSecondsVisibility);
 
             // Request consultation UI
             RequestConsultation.$appRequestConsultationUI = document.querySelector(".app-request-consultation-ui");
@@ -5108,16 +5119,24 @@
             return (localTimeOffset - mskTimeOffset) / 60;
         }
 
-        static ChangeWebCustomizedInfoText() {
+        static ChangeTimezoneText() {
             const infoText = document.querySelector(".webCustomized-info-text");
+            const uiText = document.querySelector(".app-request-consultation-ui-text");
+
             if (this.checked) { 
-                let localStart = RequestConsultation.$WorkTimeHourValueStart + RequestConsultation.$TimeZoneHourOffset;
-                let localEnd = RequestConsultation.$WorkTimeHourValueEnd + RequestConsultation.$TimeZoneHourOffset;
+                let localStart = RequestConsultation.$WorkTimeHourValueStart - RequestConsultation.$TimeZoneHourOffset;
+                let localEnd = RequestConsultation.$WorkTimeHourValueEnd - RequestConsultation.$TimeZoneHourOffset;
                 infoText.innerHTML = `Время работы с ${("0" + localStart).slice(-2)}.00  до ${("0" + localEnd).slice(-2)}.00 (местное время)`;
+                uiText.innerHTML = "Выберите удобное для Вас время (местное время) и отправьте запрос. Мы обязательно свяжемся с Вами.";
             } 
             else {
                 infoText.innerHTML = "Время работы с 09.00 до 19.00 (мск)";
+                uiText.innerHTML = "Выберите удобное для Вас время (мск) и отправьте запрос. Мы обязательно свяжемся с Вами.";
             }
+        }
+
+        static ChangeSecondsVisibility() {
+            
         }
 
         static GetTimePickerComponent() {
