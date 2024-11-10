@@ -736,6 +736,7 @@
     }
     /*#endregion app */
 </style>
+
 <div class="widget-window">
     <div class="found-cheaper-widget">
         <div tabindex="-1" class="ui-dialog-container">
@@ -774,7 +775,7 @@
                                                     Местное время
                                                 </label>
                                                 <label class = "webCustomized-controls-showSeconds-label">
-                                                    <input type="checkbox" class="webCustomized-controls-showSeconds-checkbox" v-model="showSeconds" />
+                                                    <input type="checkbox" class="webCustomized-controls-showSeconds-checkbox" />
                                                     Показать секунды
                                                 </label>
                                             </div>
@@ -782,7 +783,7 @@
 
                                         <!-- Time Picker -->
                                         <div id="app-request-consultation" class="app-request-consultation">
-                                            <zxc-time-picker lang="ru" v-bind:show-hours="true" v-bind:show-minutes="true" v-bind:show-seconds="false"></zxc-time-picker>
+                                            <zxc-time-picker lang="ru" v-bind:show-hours="true" v-bind:show-minutes="true" v-bind:show-seconds="setShowSeconds()"></zxc-time-picker>
                                         </div>
                                         <!-- / Time Picker -->
                                     </div>
@@ -4975,6 +4976,46 @@
         );
     });
 
+    // function getParameters() {
+        //     let parameters = new URLSearchParams(window.location.search);
+        
+        //     let lang = "ru";
+        //     let hours = true;
+        //     let minutes = true;
+        //     let seconds = false;
+        
+    //     for (let p of parameters) {
+    //         if(p[0] == "lang") lang = p[1] ?? "ru";
+    //         if(p[0] == "showHours") hours = p[1] ?? true;
+    //         if(p[0] == "showMinutes") minutes = p[1] ?? true;
+    //         if(p[0] == "showSeconds") seconds = p[1] ?? false;
+    //     }
+    //     let parametersString = `{ 'show-hours': ${hours}, 'show-minutes': ${minutes}, 'show-seconds': ${seconds} }`;
+    //     return parametersString;
+    // }
+    
+    function setShowSeconds() {
+        let parameters = new URLSearchParams(window.location.search);
+        return parameters.get("showSeconds") == 1;
+    }
+
+    // function setShowMinutes(){
+    //     let parameters = new URLSearchParams(window.location.search);
+    //     let value = parameters.get("showMinutes") ?? 1;
+    //     return value == 1;
+    // }
+
+    // function setShowHours(){
+    //     let parameters = new URLSearchParams(window.location.search);
+    //     let value = parameters.get("showHours") ?? 1;
+    //     return value == 1;
+    // }
+
+    // function setLang(){
+    //     let parameters = new URLSearchParams(window.location.search);
+    //     return parameters.get("lang") ?? "ru";
+    // }
+
     class RequestConsultation {
         constructor() {}
 
@@ -5136,7 +5177,10 @@
         }
 
         static ChangeSecondsVisibility() {
+            let parameters = new URLSearchParams(window.location.search);
+            let value = parameters.get("showSeconds") ?? "0";
             
+            window.location.search = `showSeconds=${value == 0 ? 1 : 0}`;
         }
 
         static GetTimePickerComponent() {
