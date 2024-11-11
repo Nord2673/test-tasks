@@ -4996,7 +4996,9 @@
     
     function setShowSeconds() {
         let parameters = new URLSearchParams(window.location.search);
-        return parameters.get("showSeconds") == 1;
+        let showSeconds = parameters.get("showSeconds") == 1;
+        if(showSeconds) document.querySelector(".webCustomized-controls-showSeconds-checkbox").checked = true;
+        return showSeconds;
     }
 
     // function setShowMinutes(){
