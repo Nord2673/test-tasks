@@ -5051,7 +5051,7 @@
                     </svg>
                 </div>
                 <div class="zxc-time-picker-values">
-                    <div class="zxc-time-picker-select" v-if="showHours" v-on:mousewheel="timeScroll(event, 'h')">
+                    <div class="zxc-time-picker-select" v-if="showHours" v-on:mousewheel="timeScroll(event, 'h')" v-on:touchstart="touchStart(event, 'h')" v-on:touchmove="touchTimeScroll(event, 'h')">
                         <a href="#" v-bind:class="['zxc-time-picker-nav', { 'zxc-time-picker-disabled': disabledStyle.up.h }]" v-on:click="adjustTime(event, 'h', 'up')">
                             <svg viewBox="0 0 24 24">
                                 <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" />
@@ -5069,7 +5069,7 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="zxc-time-picker-select" v-if="showMinutes" v-on:mousewheel="timeScroll(event, 'm')">
+                    <div class="zxc-time-picker-select" v-if="showMinutes" v-on:mousewheel="timeScroll(event, 'm')" v-on:touchstart="touchStart(event, 'm')" v-on:touchmove="touchTimeScroll(event, 'm')">
                         <a href="#" v-bind:class="['zxc-time-picker-nav', { 'zxc-time-picker-disabled': disabledStyle.up.m }]" v-on:click="adjustTime(event, 'm', 'up')">
                             <svg viewBox="0 0 24 24">
                                 <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" />
@@ -5087,7 +5087,7 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="zxc-time-picker-select" v-if="showSeconds" v-on:mousewheel="timeScroll(event, 's')">
+                    <div class="zxc-time-picker-select" v-if="showSeconds" v-on:mousewheel="timeScroll(event, 's')" v-on:touchstart="touchStart(event, 's')" v-on:touchmove="touchTimeScroll(event, 's')">
                         <a href="#" v-bind:class="['zxc-time-picker-nav', { 'zxc-time-picker-disabled': disabledStyle.up.s }]" v-on:click="adjustTime(event, 's', 'up')">
                             <svg viewBox="0 0 24 24">
                                 <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" />
@@ -5105,7 +5105,7 @@
                             </svg>
                         </a>
                     </div>
-                    <div class="zxc-time-picker-select" v-if="selectedPattern == 12" v-on:mousewheel="timeScroll(event, 'p')">
+                    <div class="zxc-time-picker-select" v-if="selectedPattern == 12" v-on:mousewheel="timeScroll(event, 'p')" v-on:touchstart="touchStart(event, 'p')" v-on:touchmove="touchTimeScroll(event, 'p')">
                         <a href="#" v-bind:class="['zxc-time-picker-nav', { 'zxc-time-picker-disabled': disabledStyle.up.p }]" v-on:click="adjustTime(event, 'p', 'up')">
                             <svg viewBox="0 0 24 24">
                                 <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" />
@@ -5248,6 +5248,7 @@
                         selectedPattern: 24,
                         dayActive: true,
                         nightActive: false,
+                        touchPos: 0,
                         transformStyle: {
                             h: null,
                             m: null,
@@ -5356,6 +5357,21 @@
                         var dir = evt.wheelDeltaY < 0 ? "up" : "down";
 
                         this.adjustTime(evt, which, dir);
+                    },
+                    touchStart: function (evt, which) {
+                        this.touchPos = evt.changedTouches[0].clientY;
+                    },
+                    touchTimeScroll: function (evt, which) {
+                        let newTouchPos = evt.changedTouches[0].clientY;
+
+                        if (newTouchPos - this.touchPos > 5) {
+                            this.touchPos = newTouchPos;
+                            this.adjustTime(evt, which, "down");
+                        }
+                        if (newTouchPos - this.touchPos < -5) {
+                            this.touchPos = newTouchPos;
+                            this.adjustTime(evt, which, "up");
+                        }
                     },
                     adjustTime: function (evt, which, dir) {
                         evt.preventDefault();
