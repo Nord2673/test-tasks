@@ -404,7 +404,7 @@
                                                 </div>
                                                 <div class="app-request-consultation-callback-content-description">
                                                     <div class="atoms-text components-rich-string-light mb-16-a">
-                                                        <span class="tsBody500Medium">Не удалось связаться с сервером</span>
+                                                        <span class="app-request-consultation-callback-content-description-text tsBody500Medium">Не удалось связаться с сервером</span>
                                                     </div>
                                                     <div class="flex-container-center">
                                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="239.16232" viewBox="0 0 524.67001 418.27099">
@@ -465,8 +465,23 @@
     </div>
 </div>
 <script>
-    let returnButton = document.querySelector(".app-request-consultation-close-callback-error");
-    returnButton.addEventListener("click", returnToStartWidget);
+    document.addEventListener("DOMContentLoaded", function () {
+        let parameters = new URLSearchParams(window.location.search);
+        let errorCode = parameters.get("error");
+
+        let errors = new Map([
+            ["400", "Bad Request"],
+            ["403", "Forbidden"],
+            ["500", "Internal Server Error"],
+            ["503", "Service Unavailable"]
+        ]);
+        document.querySelector(".app-request-consultation-callback-content-description-text").innerHTML += `<br>${errorCode} ${errors.get(errorCode)}`;
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let returnButton = document.querySelector(".app-request-consultation-close-callback-error");
+        returnButton.addEventListener("click", returnToStartWidget);
+    });
 
     function returnToStartWidget() {
         window.location = "widjet-request-consultation-start.html";
