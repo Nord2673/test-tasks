@@ -5167,9 +5167,10 @@
             const uiText = document.querySelector(".app-request-consultation-ui-text");
 
             if (this.checked) {
-                let localStart = RequestConsultation.$WorkTimeHourValueStart - RequestConsultation.$TimeZoneHourOffset;
-                let localEnd = RequestConsultation.$WorkTimeHourValueEnd - RequestConsultation.$TimeZoneHourOffset;
-                infoText.innerHTML = `Время работы с ${("0" + localStart).slice(-2)}.00  до ${("0" + localEnd).slice(-2)}.00 (местное время)`;
+                let localStart = (RequestConsultation.$WorkTimeHourValueStart - RequestConsultation.$TimeZoneHourOffset) % 24;
+                let localEnd = (RequestConsultation.$WorkTimeHourValueEnd - RequestConsultation.$TimeZoneHourOffset) % 24;
+                let localToMskOffset = RequestConsultation.$TimeZoneHourOffset > 0 ? `-${0 - RequestConsultation.$TimeZoneHourOffset}` : `+${0 - RequestConsultation.$TimeZoneHourOffset}`;
+                infoText.innerHTML = `Время работы с ${("0" + localStart).slice(-2)}.00  до ${("0" + localEnd).slice(-2)}.00 (мск${localToMskOffset})`;
                 uiText.innerHTML = "Выберите удобное для Вас время (местное время) и отправьте запрос. Мы обязательно свяжемся с Вами.";
             } else {
                 infoText.innerHTML = "Время работы с 09.00 до 19.00 (мск)";
