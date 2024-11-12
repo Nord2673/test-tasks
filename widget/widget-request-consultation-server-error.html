@@ -275,7 +275,7 @@
         width: 100%;
     }
     .modal-layout-container {
-        background: #fff;
+        /* background: #fff; */
         min-height: 100px;
         min-width: 288px;
     }
@@ -316,19 +316,29 @@
     .ui-dialog-content-wrapper {
         background-color: var(--bg-white);
         box-sizing: border-box;
-        margin: 50px 0;
+        /* margin: 50px 0; */
         max-width: 960px;
-        min-width: 392px;
+        min-width: 340px;
         position: relative;
     }
     .ui-dialog-content-wrapper.ui-close-dialog-md {
         border-radius: var(--cardBorderRadius, var(--border-radius-xl));
         border-radius: 32px;
-        padding: 46px;
+        padding: 10px;
     }
     .ui-close-dialog.ui-close-dialog-md {
-        right: 18px;
-        top: 18px;
+        right: 14px;
+        top: 14px;
+    }
+
+    @media (min-width: 768px){ 
+        .ui-dialog-content-wrapper.ui-close-dialog-md {
+            padding: 46px;
+        }
+        .ui-close-dialog.ui-close-dialog-md {
+            right: 18px;
+            top: 18px;
+        }
     }
     /*#endregion ui-dialog ui-kit-ds-dialog */
 
@@ -349,7 +359,16 @@
         margin: 0 auto;
         -o-object-fit: contain;
         object-fit: contain;
-        padding: 30px 10px 20px;
+        padding: 35px 10px 10px;
+    }
+
+    @media (min-width: 768px) {
+        .wannaConsultation-container {
+            padding: 30px 10px 20px;
+        }
+        .zxc-time-picker-image {
+            height: 9em;
+        }
     }
     /*#endregion app */
 
