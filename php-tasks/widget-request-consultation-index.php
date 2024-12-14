@@ -5438,11 +5438,13 @@
                         this.changeDayOrNight(this.hour);
                     },
                     timepickerCancel: function () {
-                        this.selectedPattern = 12;
-                        this.hour = 6;
+                        this.selectedPattern = 24;
+                        this.hour = 9;
                         this.minute = 0;
                         this.second = 0;
                         this.pattern = 0;
+                        RequestConsultation.$appRequestConsultationTimezoneCheckbox.checked = false;
+                        RequestConsultation.ChangeTimezoneText();
 
                         this.renderDefault();
                     },
