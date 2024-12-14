@@ -5502,21 +5502,18 @@
                 //}
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        RequestConsultation.SetSuccessUI();
+                    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                        if (this.responseText == "success") {
+                            RequestConsultation.SetSuccessUI();
+                        } else if (this.responseText == "fail") {
+                            RequestConsultation.SetTimeErrorUI();
+                        }
                     } else {
                         RequestConsultation.SetServerErrorUI(this.status);
                     }
                 };
 
-                // Для проверки
-                if (hourValue == 9 && minuteValue == 1) {
-                    xhttp.open("GET", "https://httpbin.org/status/403", true);
-                } else if (hourValue == 9 && minuteValue == 2) {
-                    xhttp.open("GET", "https://httpbin.org/status/500", true);
-                } else {
-                    xhttp.open("GET", "https://httpbin.org/status/200", true);
-                }
+                xhttp.open("GET", `timechecker.php?hh=${hourValue}&mm=${minuteValue}&ss=${secondValue}`, true);
                 xhttp.send();
             } else {
                 // error status
