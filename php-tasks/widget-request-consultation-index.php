@@ -812,7 +812,7 @@
 
                                         <!-- Time Picker -->
                                         <div id="app-request-consultation" class="app-request-consultation">
-                                            <zxc-time-picker lang="ru" v-bind:show-hours="true" v-bind:show-minutes="true" v-bind:show-seconds="setShowSeconds()"></zxc-time-picker>
+                                            <zxc-time-picker lang=<?php echo isset($_GET["lang"])? $_GET["lang"] : "ru";?> v-bind:show-hours="true" v-bind:show-minutes="true" v-bind:show-seconds="setShowSeconds()"></zxc-time-picker>
                                         </div>
                                         <!-- / Time Picker -->
                                     </div>
@@ -5210,8 +5210,9 @@
         static ChangeSecondsVisibility() {
             let parameters = new URLSearchParams(window.location.search);
             let value = parameters.get("showSeconds") ?? "0";
+            parameters.set("showSeconds", `${value == 0 ? 1 : 0}`)
 
-            window.location.search = `showSeconds=${value == 0 ? 1 : 0}`;
+            window.location.search = parameters;
         }
 
         static GetTimePickerComponent() {
@@ -5274,7 +5275,7 @@
                         patternId12: null,
                         patternId24: null,
                         patternName: null,
-                        selectedPattern: 24,
+                        selectedPattern: <?php echo json_encode($_GET["timePattern"]?? 24);?>,
                         dayActive: true,
                         nightActive: false,
                         touchPos: 0,
